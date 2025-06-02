@@ -431,5 +431,78 @@ if selected_mbti != '선택해주세요':
         "INTP": ["⏰ 시간 관리 능력 기르기", "🗣️ 커뮤니케이션 스킬 향상", "📋 체계적 업무 처리"],
         "ENTJ": ["❤️ 감정적 공감 능력 개발", "👂 경청하는 자세", "⚖️ 일과 휴식의 균형"],
         "ENTP": ["📝 세부사항 관리 능력", "⏳ 지속성과 끈기", "🎯 우선순위 설정"],
-        "INFJ": ["💪 스트레스 관리법 익히기", "🗣️ 자신의 의견 표현하기", "🌍
-         
+        "INFJ": ["💪 스트레스 관리법 익히기", "🗣️ 자신의 의견 표현하기", "🌍 현실적 관점 기르기"],
+        "INFP": ["⏰ 시간 관리와 계획성", "💪 자신감 키우기", "🎯 목표 구체화하기"],
+        "ENFJ": ["🛡️ 개인 경계선 설정", "😌 자기 돌봄 시간 갖기", "🎯 객관적 판단력"],
+        "ENFP": ["📋 체계적 업무 처리", "⏳ 집중력 향상", "💪 끝까지 해내는 끈기"],
+        "ISTJ": ["🎨 창의성 개발", "🌈 유연한 사고", "🗣️ 소통 능력 향상"],
+        "ISFJ": ["💪 자기 주장 능력", "🚫 거절하는 법 배우기", "🌟 자신의 가치 인정하기"],
+        "ESTJ": ["🤗 유연성과 공감 능력", "😌 스트레스 관리", "🎨 창의적 사고 개발"],
+        "ESFJ": ["💪 자기 의견 표현", "🛡️ 개인 시간 확보", "🎯 객관적 결정력"],
+        "ISTP": ["🗣️ 감정 표현 능력", "👥 팀워크 협력", "📅 장기 계획 수립"],
+        "ISFP": ["💪 자신감 키우기", "🗣️ 의견 표현하기", "⏰ 시간 관리 능력"],
+        "ESTP": ["⏳ 장기적 사고", "📚 꾸준한 학습", "💭 신중한 판단력"],
+        "ESFP": ["📋 체계적 계획", "💪 집중력 향상", "🎯 목표 설정과 달성"]
+    }
+    
+    tips = growth_tips.get(selected_mbti, ["💪 꾸준한 노력", "🌟 자기 발견", "🎯 목표 설정"])
+    
+    for tip in tips:
+        st.markdown(f"- {tip}")
+    
+    # 마무리 메시지
+    st.markdown("---")
+    st.markdown(f"""
+    <div class="personality-desc">
+        <h3 style="text-align: center;">🎉 {selected_mbti} 유형의 여러분을 응원합니다! 🎉</h3>
+        <p style="text-align: center; font-size: 1.1em;">
+            💫 당신만의 특별한 재능으로 세상을 더 아름답게 만들어가세요! 💫<br>
+            🌈 모든 꿈은 이루어질 수 있습니다! 🌈
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+else:
+    # MBTI 미선택 시 안내
+    st.markdown("""
+    <div class="personality-desc">
+        <h2 style="text-align: center;">🤔 아직 MBTI를 선택하지 않으셨네요! 🤔</h2>
+        <p style="text-align: center; font-size: 1.2em;">
+            👈 왼쪽 사이드바에서 당신의 MBTI를 선택해주세요!<br>
+            🎯 놀라운 진로 추천이 기다리고 있어요! 🎯
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # MBTI 소개 카드들
+    st.markdown("### 🌟 MBTI 유형들을 미리 둘러보세요! 🌟")
+    
+    # 4x4 그리드로 MBTI 타입들 표시
+    mbti_types = list(mbti_data.keys())
+    
+    for i in range(0, 16, 4):
+        cols = st.columns(4)
+        for j in range(4):
+            if i + j < len(mbti_types):
+                mbti_type = mbti_types[i + j]
+                data = mbti_data[mbti_type]
+                with cols[j]:
+                    st.markdown(f"""
+                    <div class="career-card" style="text-align: center; min-height: 120px;">
+                        <h4>{mbti_type}</h4>
+                        <p style="font-size: 1.5em;">{data['emoji']}</p>
+                        <p style="font-size: 0.9em;">{data['name']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+# 푸터
+st.markdown("---")
+st.markdown("""
+<div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px; margin-top: 30px;">
+    <h4>🌟 MBTI 진로 탐험가와 함께 꿈을 찾아가세요! 🌟</h4>
+    <p>💝 당신의 미래가 더욱 밝고 아름답기를 응원합니다! 💝</p>
+    <p>🎯 Made with ❤️ by Streamlit 🎯</p>
+</div>
+""", unsafe_allow_html=True)
+
+  
