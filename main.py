@@ -6,12 +6,15 @@ import streamlit as st
 import random
 
 # 페이지 설정
-st.set_page_config(
-    page_title="🌟 MBTI 진로 탐험가 🌟",
-    page_icon="🎯",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+try:
+    st.set_page_config(
+        page_title="🌟 MBTI 진로 탐험가 🌟",
+        page_icon="🎯",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
+except:
+    pass
 
 # CSS 스타일링
 st.markdown("""
