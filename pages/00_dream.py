@@ -1,11 +1,10 @@
 
 import streamlit as st
+st.set_page_config(page_title="TOP10 주식 분석", page_icon="📈", layout="wide")
 import yfinance as yf
 import plotly.graph_objects as go
 import pandas as pd
 
-# 페이지 설정
-st.set_page_config(page_title="TOP10 주식 분석", page_icon="📈", layout="wide")
 
 st.title("📈 글로벌 시가총액 TOP10 - 최근 1년 주식 변화")
 
