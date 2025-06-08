@@ -635,17 +635,114 @@ def main():
             st.session_state.high_contrast_was_on = True
         
         # 애니메이션 줄이기
-        reduce_motion = st.checkbox("🚫 애니메이션 줄이기")
+        reduce_motion = st.checkbox("🚫 애니메이션 줄이기", value=st.session_state.get('reduce_motion', False))
+        st.session_state.reduce_motion = reduce_motion
         
         if reduce_motion:
             st.markdown("""
             <style>
-            * {
+            /* 모든 애니메이션과 전환 효과 제거 */
+            *, *::before, *::after {
                 animation-duration: 0s !important;
+                animation-delay: 0s !important;
+                animation-iteration-count: 1 !important;
                 transition-duration: 0s !important;
+                transition-delay: 0s !important;
+                scroll-behavior: auto !important;
+            }
+            
+            /* Streamlit 특정 애니메이션 제거 */
+            .stApp {
+                animation: none !important;
+                transition: none !important;
+            }
+            
+            /* 로딩 스피너 애니메이션 제거 */
+            .stSpinner {
+                animation: none !important;
+            }
+            
+            /* 버튼 호버 효과 제거 */
+            .stButton > button {
+                transition: none !important;
+            }
+            
+            .stButton > button:hover {
+                transition: none !important;
+                transform: none !important;
+            }
+            
+            /* 탭 전환 애니메이션 제거 */
+            .stTabs [data-baseweb="tab-list"] button {
+                transition: none !important;
+            }
+            
+            /* 확장창 애니메이션 제거 */
+            .streamlit-expanderHeader {
+                transition: none !important;
+            }
+            
+            .streamlit-expanderContent {
+                transition: none !important;
+                animation: none !important;
+            }
+            
+            /* 사이드바 애니메이션 제거 */
+            .css-1d391kg {
+                transition: none !important;
+                animation: none !important;
+            }
+            
+            /* 알림 메시지 애니메이션 제거 */
+            .stAlert, .stSuccess, .stWarning, .stError, .stInfo {
+                animation: none !important;
+                transition: none !important;
+            }
+            
+            /* 입력창 포커스 애니메이션 제거 */
+            .stSelectbox > div > div, .stTextInput > div > div > input {
+                transition: none !important;
+            }
+            
+            /* 체크박스 애니메이션 제거 */
+            .stCheckbox {
+                transition: none !important;
+            }
+            
+            /* 프로그레스 바 애니메이션 제거 */
+            .stProgress .progress-bar {
+                transition: none !important;
+                animation: none !important;
+            }
+            
+            /* 스크롤 애니메이션 제거 */
+            html {
+                scroll-behavior: auto !important;
+            }
+            
+            /* CSS prefers-reduced-motion 적용 */
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                    scroll-behavior: auto !important;
+                }
             }
             </style>
             """, unsafe_allow_html=True)
+            
+            # 애니메이션 줄이기 상태 표시
+            st.success("🚫 애니메이션이 모두 비활성화되었습니다! (전정 장애 배려)")
+        else:
+            # 애니메이션 복원 시 알림
+            if st.session_state.get('reduce_motion_was_on', False):
+                st.info("✨ 애니메이션이 다시 활성화되었습니다!")
+            st.session_state.reduce_motion_was_on = False
+        
+        # 애니메이션 상태 추적
+        if reduce_motion:
+            st.session_state.reduce_motion_was_on = True
         
         st.markdown("---")
         
