@@ -1,4 +1,13 @@
 import streamlit as st
+
+# 페이지 설정 - 반드시 첫 번째로!
+st.set_page_config(
+    page_title="🚨 재난 대피소 안내",
+    page_icon="🚨",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -18,14 +27,6 @@ try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-
-# 페이지 설정
-st.set_page_config(
-    page_title="🚨 재난 대피소 안내",
-    page_icon="🚨",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 # CSS 스타일링 (접근성 고려)
 def load_css():
@@ -349,6 +350,10 @@ def create_text_map(shelters, hospitals, user_location=None):
 
 # 메인 앱
 def main():
+    # folium 없을 때 경고 메시지
+    if not FOLIUM_AVAILABLE:
+        st.warning("🗺️ 지도 기능을 위해 다음 명령어를 실행해주세요: pip install folium streamlit-folium")
+    
     load_css()
     
     # 세션 상태 초기화
