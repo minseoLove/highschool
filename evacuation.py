@@ -632,3 +632,20 @@ def main():
                     st.write("**🏃‍♂️ 대피 행동**")
                     for action in guide["evacuation"]:
                         st.write(action)
+                
+                # 음성 안내 버튼
+                if st.button(f"🔊 {disaster} 행동요령 음성안내", key=f"guide_{disaster}"):
+                    speak_text(f"{disaster} 발생시 행동요령을 안내드립니다.")
+    
+    # 푸터
+    st.markdown("---")
+    st.markdown("""
+    <div style='text-align: center; color: #6B7280; padding: 20px;'>
+    <p>🚨 재난 불평등 해소 프로젝트 | 모든 시민의 안전한 대피를 위해</p>
+    <p>📞 응급상황 시: 119 (소방서) | 112 (경찰서) | 1588-5117 (재난안전상황실)</p>
+    <p><strong>데이터:</strong> 대피소 5개소 | 응급의료시설 3개소 | 3개 지역</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+if __name__ == "__main__":
+    main()
