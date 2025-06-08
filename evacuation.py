@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1
 
 # 페이지 설정 - 반드시 첫 번째로!
 st.set_page_config(
@@ -273,10 +274,38 @@ def load_hospital_data():
         }
     ]
 
-# 음성 안내 기능 (시뮬레이션)
+# 음성 안내 기능 (실제 TTS 구현)
 def speak_text(text):
     if st.session_state.get('voice_enabled', False):
+        # 화면에 표시
         st.info(f"🔊 음성 안내: {text}")
+        
+        # HTML5 Speech Synthesis API 사용
+        speech_js = f"""
+        <script>
+        if ('speechSynthesis' in window) {{
+            var utterance = new SpeechSynthesisUtterance('{text}');
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.8;
+            utterance.pitch = 1.0;
+            utterance.volume = 0.8;
+            
+            // 한국어 음성 찾기
+            var voices = speechSynthesis.getVoices();
+            var koreanVoice = voices.find(voice => voice.lang.includes('ko'));
+            if (koreanVoice) {{
+                utterance.voice = koreanVoice;
+            }}
+            
+            speechSynthesis.speak(utterance);
+        }} else {{
+            console.log('음성 합성을 지원하지 않는 브라우저입니다.');
+        }}
+        </script>
+        """
+        
+        # JavaScript 실행
+        st.components.v1.html(speech_js, height=0)
 
 # 거리 계산 함수
 def calculate_distance(lat1, lon1, lat2, lon2):
