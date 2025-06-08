@@ -275,6 +275,159 @@ def load_hospital_data():
         }
     ]
 
+# CSS 스타일링 (접근성 고려)
+def load_css():
+    font_sizes = {
+        "소형": "14px",
+        "보통": "16px", 
+        "대형": "20px",
+        "특대": "24px"
+    }
+    
+    font_size = st.session_state.get('font_size', '보통')
+    
+    st.markdown(f"""
+    <style>
+    /* 전체 앱 글씨 크기 조절 */
+    .stApp {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 메인 헤더 */
+    .main-header {{
+        font-size: calc({font_sizes[font_size]} * 2) !important;
+        font-weight: bold;
+        color: #DC2626;
+        text-align: center;
+        margin-bottom: 20px;
+    }}
+    
+    /* 서브 헤더 */
+    .stApp h1, .stApp h2, .stApp h3 {{
+        font-size: calc({font_sizes[font_size]} * 1.5) !important;
+    }}
+    
+    /* 일반 텍스트 */
+    .stApp p, .stApp div, .stApp span, .stApp label {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 버튼 */
+    .stButton > button {{
+        font-size: {font_sizes[font_size]} !important;
+        padding: 10px 20px !important;
+    }}
+    
+    /* 선택박스 */
+    .stSelectbox > div > div {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 입력창 */
+    .stTextInput > div > div > input {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 체크박스 */
+    .stCheckbox > label {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 탭 */
+    .stTabs [data-baseweb="tab-list"] button {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 확장창 */
+    .streamlit-expanderHeader {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 사이드바 */
+    .css-1d391kg {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 알림 메시지 */
+    .stAlert {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 성공/경고/에러 메시지 */
+    .stSuccess, .stWarning, .stError, .stInfo {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 메트릭 */
+    .metric-container {{
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 응급 버튼 강조 */
+    .emergency-button {{
+        background-color: #DC2626 !important;
+        color: white !important;
+        padding: 15px 30px !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-size: calc({font_sizes[font_size]} * 1.2) !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        width: 100% !important;
+        margin: 10px 0 !important;
+    }}
+    
+    /* 대피소 카드 */
+    .shelter-card {{
+        border: 2px solid #E5E7EB !important;
+        border-radius: 10px !important;
+        padding: 20px !important;
+        margin: 10px 0 !important;
+        background-color: #F9FAFB !important;
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 접근성 정보 */
+    .accessibility-info {{
+        background-color: #DBEAFE !important;
+        padding: 10px !important;
+        border-radius: 5px !important;
+        margin: 10px 0 !important;
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 응급 연락처 */
+    .emergency-contact {{
+        background-color: #FEF3C7 !important;
+        padding: 15px !important;
+        border-radius: 10px !important;
+        border-left: 5px solid #F59E0B !important;
+        font-size: {font_sizes[font_size]} !important;
+    }}
+    
+    /* 재난 경고 */
+    .disaster-warning {{
+        background-color: #FECACA !important;
+        padding: 15px !important;
+        border-radius: 10px !important;
+        border-left: 5px solid #DC2626 !important;
+        font-size: {font_sizes[font_size]} !important;
+        margin: 20px 0 !important;
+    }}
+    
+    /* 고대비 모드 */
+    .high-contrast {{
+        background-color: #000000 !important;
+        color: #FFFFFF !important;
+    }}
+    
+    .high-contrast .stApp {{
+        background-color: #000000 !important;
+        color: #FFFFFF !important;
+    }}
+    </style>
+    """, unsafe_allow_html=True)
+
 # 음성 안내 기능
 def speak_text(text, speed=1.2):
     if st.session_state.get('voice_enabled', False):
@@ -303,24 +456,90 @@ def main():
         st.session_state.font_size = '보통'
     if 'voice_enabled' not in st.session_state:
         st.session_state.voice_enabled = False
+    if 'high_contrast' not in st.session_state:
+        st.session_state.high_contrast = False
+    
+    # CSS 로드 (글씨 크기 반영)
+    load_css()
     
     # 헤더
-    st.title("🚨 재난 대피소 안내 시스템")
-    st.markdown("안전한 대피를 위한 맞춤형 안내 서비스")
+    st.markdown('<h1 class="main-header">🚨 재난 대피소 안내 시스템</h1>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: center; font-size: 18px; color: #6B7280;">안전한 대피를 위한 맞춤형 안내 서비스</p>', unsafe_allow_html=True)
     
     # 사이드바
     with st.sidebar:
         st.header("🔧 접근성 설정")
         
-        font_size = st.selectbox("글씨 크기", ["소형", "보통", "대형", "특대"], 
-                                index=["소형", "보통", "대형", "특대"].index(st.session_state.font_size))
-        st.session_state.font_size = font_size
+        # 글씨 크기 조절
+        font_size = st.selectbox(
+            "📝 글씨 크기", 
+            ["소형", "보통", "대형", "특대"], 
+            index=["소형", "보통", "대형", "특대"].index(st.session_state.font_size),
+            help="화면의 모든 글씨 크기가 변경됩니다."
+        )
         
+        # 글씨 크기가 변경되면 즉시 적용
+        if font_size != st.session_state.font_size:
+            st.session_state.font_size = font_size
+            st.rerun()  # 페이지 새로고침하여 CSS 재적용
+        
+        # 실시간 글씨 크기 미리보기
+        st.markdown(f"""
+        <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px;">
+        <p style="font-size: 14px;">소형: 안전한 대피를 위해</p>
+        <p style="font-size: 16px;">보통: 안전한 대피를 위해</p>
+        <p style="font-size: 20px;">대형: 안전한 대피를 위해</p>
+        <p style="font-size: 24px;">특대: 안전한 대피를 위해</p>
+        <p style="color: red; font-weight: bold;">현재 선택: {font_size}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("---")
+        
+        # 음성 안내
         voice_enabled = st.checkbox("🔊 음성 안내 활성화", value=st.session_state.voice_enabled)
         st.session_state.voice_enabled = voice_enabled
         
         if voice_enabled and st.button("🔊 음성 테스트"):
-            speak_text("음성 안내 시스템이 정상 작동합니다.")
+            speak_text("음성 안내 시스템이 정상 작동합니다. 현재 글씨 크기는 " + font_size + "입니다.")
+        
+        st.markdown("---")
+        
+        # 고대비 모드
+        high_contrast = st.checkbox("🌓 고대비 모드", value=st.session_state.high_contrast)
+        st.session_state.high_contrast = high_contrast
+        
+        if high_contrast:
+            st.markdown("""
+            <style>
+            .stApp {
+                background-color: #000000 !important;
+                color: #FFFFFF !important;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+        
+        # 애니메이션 줄이기
+        reduce_motion = st.checkbox("🚫 애니메이션 줄이기")
+        
+        if reduce_motion:
+            st.markdown("""
+            <style>
+            * {
+                animation-duration: 0s !important;
+                transition-duration: 0s !important;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+        
+        st.markdown("---")
+        
+        # 접근성 도움말
+        with st.expander("♿ 접근성 도움말"):
+            st.write("📝 **글씨 크기**: 시각 장애나 고령자분들을 위해 글씨를 크게 설정할 수 있습니다.")
+            st.write("🔊 **음성 안내**: 시각 장애인분들을 위한 음성 읽기 기능입니다.")
+            st.write("🌓 **고대비 모드**: 저시력자분들을 위한 검정 배경 + 흰 글씨 모드입니다.")
+            st.write("🚫 **애니메이션 줄이기**: 전정 장애나 어지럼증이 있는 분들을 위해 움직임을 줄입니다.")
     
     # 메인 탭들
     tab1, tab2, tab3 = st.tabs(["🏠 대피소 찾기", "🏥 응급의료시설", "📚 재난 행동요령"])
