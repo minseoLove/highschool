@@ -28,1078 +28,6 @@ try:
 except ImportError:
     REQUESTS_AVAILABLE = False
 
-# 실제 조사 데이터 (전체)
-@st.cache_data
-def load_shelter_data():
-    return {
-        "강남구": {
-            "earthquake": [
-                {
-                    "name": "도곡종합운동장",
-                    "address": "서울 강남구 매봉로 77",
-                    "lat": 37.4782,
-                    "lon": 127.0426,
-                    "capacity": 3000,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "축구장",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "3호선 도곡역 도보 8분"
-                },
-                {
-                    "name": "개포중학교",
-                    "address": "서울 강남구 개포로 621", 
-                    "lat": 37.4816,
-                    "lon": 127.0663,
-                    "capacity": 800,
-                    "distance": 1200,
-                    "walk_time": 15,
-                    "type": "야외운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "3호선 개포동역 도보 5분"
-                },
-                {
-                    "name": "개포고등학교",
-                    "address": "서울 강남구 개포로 621",
-                    "lat": 37.4816,
-                    "lon": 127.0663,
-                    "capacity": 1200,
-                    "distance": 1200,
-                    "walk_time": 15,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "3호선 개포동역 도보 5분"
-                },
-                {
-                    "name": "논현초등학교",
-                    "address": "서울 강남구 언주로 108길 26",
-                    "lat": 37.5131,
-                    "lon": 127.0306,
-                    "capacity": 600,
-                    "distance": 900,
-                    "walk_time": 12,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "7호선 논현역 도보 8분"
-                },
-                {
-                    "name": "대치초등학교",
-                    "address": "서울 강남구 도곡로 425",
-                    "lat": 37.4987,
-                    "lon": 127.0633,
-                    "capacity": 800,
-                    "distance": 1000,
-                    "walk_time": 13,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "3호선 대치역 도보 6분"
-                },
-                {
-                    "name": "삼성고등학교",
-                    "address": "서울 강남구 밤고개로 42길 5",
-                    "lat": 37.5086,
-                    "lon": 127.0529,
-                    "capacity": 1000,
-                    "distance": 1500,
-                    "walk_time": 18,
-                    "type": "운동장", 
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 삼성역 도보 12분"
-                }
-            ],
-            "flood": [
-                {
-                    "name": "강남구민회관",
-                    "address": "서울 강남구 학동로 426",
-                    "lat": 37.5172,
-                    "lon": 127.0473,
-                    "capacity": 500,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "견고한 건물",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "7호선 강남구청역 도보 1분"
-                },
-                {
-                    "name": "개포고등학교 체육관",
-                    "address": "서울 강남구 개포로 621",
-                    "lat": 37.4816,
-                    "lon": 127.0663,
-                    "capacity": 800,
-                    "distance": 1200,
-                    "walk_time": 15,
-                    "type": "체육관",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "3호선 개포동역 도보 5분"
-                }
-            ],
-            "war": [
-                {
-                    "name": "강남역 지하상가",
-                    "address": "서울 강남구 강남대로 지하 390",
-                    "lat": 37.4979,
-                    "lon": 127.0276,
-                    "capacity": 3000,
-                    "distance": 500,
-                    "walk_time": 6,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선/신분당선 강남역 직결"
-                },
-                {
-                    "name": "역삼역 지하공간",
-                    "address": "서울 강남구 테헤란로 지하",
-                    "lat": 37.5007,
-                    "lon": 127.0366,
-                    "capacity": 2500,
-                    "distance": 700,
-                    "walk_time": 9,
-                    "type": "지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선 역삼역 직결"
-                },
-                {
-                    "name": "선릉역 지하공간",
-                    "address": "서울 강남구 선릉로 지하",
-                    "lat": 37.5044,
-                    "lon": 127.0463,
-                    "capacity": 2000,
-                    "distance": 900,
-                    "walk_time": 11,
-                    "type": "지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선/분당선 선릉역 직결"
-                }
-            ]
-        },
-        "종로구": {
-            "earthquake": [
-                {
-                    "name": "광화문광장",
-                    "address": "서울 종로구 세종대로 172",
-                    "lat": 37.5729,
-                    "lon": 126.9764,
-                    "capacity": 5000,
-                    "distance": 300,
-                    "walk_time": 4,
-                    "type": "광장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": False,
-                    "subway": "5호선 광화문역 도보 2분"
-                },
-                {
-                    "name": "탑골공원",
-                    "address": "서울 종로구 종로 99",
-                    "lat": 37.5703,
-                    "lon": 126.9916,
-                    "capacity": 1200,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": False,
-                    "subway": "1호선 종각역 도보 3분"
-                },
-                {
-                    "name": "종묘광장",
-                    "address": "서울 종로구 종로 157",
-                    "lat": 37.5740,
-                    "lon": 126.9940,
-                    "capacity": 2000,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "광장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": False,
-                    "subway": "1/3/5호선 종로3가역 도보 5분"
-                }
-            ],
-            "war": [
-                {
-                    "name": "종각역 지하상가",
-                    "address": "서울 종로구 종로 지하",
-                    "lat": 37.5700,
-                    "lon": 126.9827,
-                    "capacity": 2000,
-                    "distance": 400,
-                    "walk_time": 5,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1호선 종각역 직결"
-                },
-                {
-                    "name": "을지로입구역 지하공간",
-                    "address": "서울 종로구 을지로 지하",
-                    "lat": 37.5664,
-                    "lon": 126.9824,
-                    "capacity": 1800,
-                    "distance": 500,
-                    "walk_time": 7,
-                    "type": "지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선 을지로입구역 직결"
-                },
-                {
-                    "name": "종로3가역 지하상가",
-                    "address": "서울 종로구 종로 지하",
-                    "lat": 37.5705,
-                    "lon": 126.9915,
-                    "capacity": 2500,
-                    "distance": 700,
-                    "walk_time": 9,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1/3/5호선 종로3가역 직결"
-                }
-            ]
-        },
-        "해운대구": {
-            "earthquake": [
-                {
-                    "name": "해운대해수욕장 광장",
-                    "address": "부산 해운대구 우동 1394",
-                    "lat": 35.1587,
-                    "lon": 129.1604,
-                    "capacity": 10000,
-                    "distance": 400,
-                    "walk_time": 5,
-                    "type": "해변광장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 해운대역 도보 3분"
-                },
-                {
-                    "name": "센텀시티 중앙공원",
-                    "address": "부산 해운대구 센텀중앙로 55",
-                    "lat": 35.1693,
-                    "lon": 129.1295,
-                    "capacity": 3000,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 센텀시티역 도보 5분"
-                },
-                {
-                    "name": "해운대스포츠센터",
-                    "address": "부산 해운대구 해운대해변로 84",
-                    "lat": 35.1598,
-                    "lon": 129.1585,
-                    "capacity": 2000,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "2호선 해운대역 도보 5분"
-                }
-            ],
-            "tsunami": [
-                {
-                    "name": "장산 등산로 입구",
-                    "address": "부산 해운대구 장산로",
-                    "lat": 35.1820,
-                    "lon": 129.1945,
-                    "capacity": 1500,
-                    "distance": 2100,
-                    "walk_time": 25,
-                    "type": "고지대",
-                    "elevation": "해발 50m",
-                    "wheelchair": False,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 장산역 도보 15분"
-                },
-                {
-                    "name": "달맞이길 공원",
-                    "address": "부산 해운대구 달맞이길",
-                    "lat": 35.1535,
-                    "lon": 129.1732,
-                    "capacity": 800,
-                    "distance": 1800,
-                    "walk_time": 22,
-                    "type": "고지대 공원",
-                    "elevation": "해발 30m",
-                    "wheelchair": False,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 해운대역 도보 20분"
-                },
-                {
-                    "name": "해운대구청사 옥상",
-                    "address": "부산 해운대구 해운대로 570",
-                    "lat": 35.1631,
-                    "lon": 129.1635,
-                    "capacity": 200,
-                    "distance": 1000,
-                    "walk_time": 12,
-                    "type": "고지대",
-                    "elevation": "해발 15m",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "2호선 해운대역 도보 10분"
-                },
-                {
-                    "name": "LCT 더샵",
-                    "address": "부산 해운대구 우동 1394",
-                    "lat": 35.1587,
-                    "lon": 129.1604,
-                    "capacity": 1000,
-                    "distance": 400,
-                    "walk_time": 5,
-                    "type": "3층 이상",
-                    "elevation": "해발 20m",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "2호선 해운대역 도보 3분"
-                }
-            ],
-            "war": [
-                {
-                    "name": "해운대역 지하상가",
-                    "address": "부산 해운대구 해운대로 지하",
-                    "lat": 35.1593,
-                    "lon": 129.1586,
-                    "capacity": 2000,
-                    "distance": 300,
-                    "walk_time": 4,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선 해운대역 직결"
-                },
-                {
-                    "name": "센텀시티역 지하공간",
-                    "address": "부산 해운대구 센텀중앙로 지하",
-                    "lat": 35.1693,
-                    "lon": 129.1295,
-                    "capacity": 1800,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선 센텀시티역 직결"
-                }
-            ]
-        },
-        "부산진구": {
-            "earthquake": [
-                {
-                    "name": "부산시민공원",
-                    "address": "부산 부산진구 시민공원로 73",
-                    "lat": 35.1663,
-                    "lon": 129.0535,
-                    "capacity": 8000,
-                    "distance": 1200,
-                    "walk_time": 15,
-                    "type": "대형공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "1호선 부전역 도보 10분"
-                },
-                {
-                    "name": "서면 시민공원",
-                    "address": "부산 부산진구 중앙대로 680",
-                    "lat": 35.1579,
-                    "lon": 129.0596,
-                    "capacity": 2500,
-                    "distance": 500,
-                    "walk_time": 6,
-                    "type": "공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": False,
-                    "subway": "1/2호선 서면역 도보 2분"
-                }
-            ],
-            "war": [
-                {
-                    "name": "서면 지하상가",
-                    "address": "부산 부산진구 서면로 지하",
-                    "lat": 35.1579,
-                    "lon": 129.0596,
-                    "capacity": 4000,
-                    "distance": 200,
-                    "walk_time": 3,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1/2호선 서면역 직결"
-                },
-                {
-                    "name": "부산진역 지하상가",
-                    "address": "부산 부산진구 중앙대로 지하",
-                    "lat": 35.1616,
-                    "lon": 129.0598,
-                    "capacity": 2500,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1호선 부산진역 직결"
-                },
-                {
-                    "name": "양정역 지하공간",
-                    "address": "부산 부산진구 양정로 지하",
-                    "lat": 35.1697,
-                    "lon": 129.0720,
-                    "capacity": 1500,
-                    "distance": 1000,
-                    "walk_time": 12,
-                    "type": "지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1호선 양정역 직결"
-                }
-            ]
-        },
-        "수원시": {
-            "earthquake": [
-                {
-                    "name": "수원월드컵경기장",
-                    "address": "경기 수원시 팔달구 월드컵로 310",
-                    "lat": 37.2866,
-                    "lon": 127.0367,
-                    "capacity": 8000,
-                    "distance": 1500,
-                    "walk_time": 18,
-                    "type": "축구장",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "1호선 수원역 버스 15분"
-                },
-                {
-                    "name": "수원종합운동장",
-                    "address": "경기 수원시 장안구 조원로 775",
-                    "lat": 37.3007,
-                    "lon": 127.0093,
-                    "capacity": 5000,
-                    "distance": 2000,
-                    "walk_time": 25,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "1호선 성균관대역 도보 15분"
-                },
-                {
-                    "name": "효원공원",
-                    "address": "경기 수원시 팔달구 인계로 178",
-                    "lat": 37.2642,
-                    "lon": 127.0286,
-                    "capacity": 2000,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "1호선 수원역 도보 8분"
-                }
-            ],
-            "flood": [
-                {
-                    "name": "수원시청",
-                    "address": "경기 수원시 팔달구 효원로 241",
-                    "lat": 37.2636,
-                    "lon": 127.0286,
-                    "capacity": 800,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "건물",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "1호선 수원역 도보 6분"
-                },
-                {
-                    "name": "팔달구청",
-                    "address": "경기 수원시 팔달구 효원로 1",
-                    "lat": 37.2658,
-                    "lon": 127.0298,
-                    "capacity": 500,
-                    "distance": 700,
-                    "walk_time": 9,
-                    "type": "건물",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "1호선 수원역 도보 7분"
-                }
-            ],
-            "war": [
-                {
-                    "name": "수원역 지하상가",
-                    "address": "경기 수원시 팔달구 매산로 지하",
-                    "lat": 37.2659,
-                    "lon": 127.0011,
-                    "capacity": 3000,
-                    "distance": 300,
-                    "walk_time": 4,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1호선 수원역 직결"
-                },
-                {
-                    "name": "인계동 지하상가",
-                    "address": "경기 수원시 팔달구 인계로 지하",
-                    "lat": 37.2642,
-                    "lon": 127.0286,
-                    "capacity": 2000,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1호선 수원역 도보 8분"
-                }
-            ]
-        },
-        "성남시": {
-            "earthquake": [
-                {
-                    "name": "탄천종합운동장",
-                    "address": "경기 성남시 분당구 탄천로 215",
-                    "lat": 37.4058,
-                    "lon": 127.1235,
-                    "capacity": 6000,
-                    "distance": 1500,
-                    "walk_time": 18,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "분당선 야탑역 도보 15분"
-                },
-                {
-                    "name": "분당중앙공원",
-                    "address": "경기 성남시 분당구 야탑로 215",
-                    "lat": 37.3515,
-                    "lon": 127.1240,
-                    "capacity": 4000,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "대형공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "분당선 야탑역 도보 5분"
-                },
-                {
-                    "name": "성남종합운동장",
-                    "address": "경기 성남시 중원구 성남대로 1",
-                    "lat": 37.4198,
-                    "lon": 127.1265,
-                    "capacity": 4500,
-                    "distance": 2000,
-                    "walk_time": 25,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "8호선 모란역 버스 10분"
-                }
-            ],
-            "flood": [
-                {
-                    "name": "성남시청",
-                    "address": "경기 성남시 중원구 성남대로 997",
-                    "lat": 37.4198,
-                    "lon": 127.1265,
-                    "capacity": 1000,
-                    "distance": 1800,
-                    "walk_time": 22,
-                    "type": "건물",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "8호선 모란역 버스 8분"
-                },
-                {
-                    "name": "분당구청",
-                    "address": "경기 성남시 분당구 야탑로 50",
-                    "lat": 37.3515,
-                    "lon": 127.1240,
-                    "capacity": 600,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "건물",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "분당선 야탑역 도보 3분"
-                }
-            ]
-        },
-        "대구중구": {
-            "earthquake": [
-                {
-                    "name": "국채보상운동기념공원",
-                    "address": "대구 중구 공평로 30",
-                    "lat": 35.8682,
-                    "lon": 128.5953,
-                    "capacity": 3000,
-                    "distance": 500,
-                    "walk_time": 6,
-                    "type": "공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "1호선 중앙로역 도보 5분"
-                },
-                {
-                    "name": "달성공원",
-                    "address": "대구 중구 달성공원로 35",
-                    "lat": 35.8743,
-                    "lon": 128.5741,
-                    "capacity": 2500,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "공원",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "1호선 달성공원역 도보 3분"
-                }
-            ],
-            "flood": [
-                {
-                    "name": "대구중구청",
-                    "address": "대구 중구 국채보상로 102길 43",
-                    "lat": 35.8700,
-                    "lon": 128.5940,
-                    "capacity": 400,
-                    "distance": 300,
-                    "walk_time": 4,
-                    "type": "건물",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "1호선 중앙로역 도보 3분"
-                }
-            ],
-            "war": [
-                {
-                    "name": "중앙로역 지하상가",
-                    "address": "대구 중구 중앙대로 지하",
-                    "lat": 35.8682,
-                    "lon": 128.5953,
-                    "capacity": 1500,
-                    "distance": 200,
-                    "walk_time": 3,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "1호선 중앙로역 직결"
-                }
-            ]
-        }
-    }외운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "3호선 개포동역 도보 5분"
-                },
-                {
-                    "name": "개포고등학교",
-                    "address": "서울 강남구 개포로 621",
-                    "lat": 37.4816,
-                    "lon": 127.0663,
-                    "capacity": 1200,
-                    "distance": 1200,
-                    "walk_time": 15,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "3호선 개포동역 도보 5분"
-                },
-                {
-                    "name": "논현초등학교",
-                    "address": "서울 강남구 언주로 108길 26",
-                    "lat": 37.5131,
-                    "lon": 127.0306,
-                    "capacity": 600,
-                    "distance": 900,
-                    "walk_time": 12,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "7호선 논현역 도보 8분"
-                },
-                {
-                    "name": "대치초등학교",
-                    "address": "서울 강남구 도곡로 425",
-                    "lat": 37.4987,
-                    "lon": 127.0633,
-                    "capacity": 800,
-                    "distance": 1000,
-                    "walk_time": 13,
-                    "type": "운동장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "3호선 대치역 도보 6분"
-                },
-                {
-                    "name": "삼성고등학교",
-                    "address": "서울 강남구 밤고개로 42길 5",
-                    "lat": 37.5086,
-                    "lon": 127.0529,
-                    "capacity": 1000,
-                    "distance": 1500,
-                    "walk_time": 18,
-                    "type": "운동장", 
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 삼성역 도보 12분"
-                }
-            ],
-            "flood": [
-                {
-                    "name": "강남구민회관",
-                    "address": "서울 강남구 학동로 426",
-                    "lat": 37.5172,
-                    "lon": 127.0473,
-                    "capacity": 500,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "견고한 건물",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "7호선 강남구청역 도보 1분"
-                },
-                {
-                    "name": "개포고등학교 체육관",
-                    "address": "서울 강남구 개포로 621",
-                    "lat": 37.4816,
-                    "lon": 127.0663,
-                    "capacity": 800,
-                    "distance": 1200,
-                    "walk_time": 15,
-                    "type": "체육관",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "3호선 개포동역 도보 5분"
-                }
-            ],
-            "war": [
-                {
-                    "name": "강남역 지하상가",
-                    "address": "서울 강남구 강남대로 지하 390",
-                    "lat": 37.4979,
-                    "lon": 127.0276,
-                    "capacity": 3000,
-                    "distance": 500,
-                    "walk_time": 6,
-                    "type": "지하상가",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선/신분당선 강남역 직결"
-                },
-                {
-                    "name": "역삼역 지하공간",
-                    "address": "서울 강남구 테헤란로 지하",
-                    "lat": 37.5007,
-                    "lon": 127.0366,
-                    "capacity": 2500,
-                    "distance": 700,
-                    "walk_time": 9,
-                    "type": "지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선 역삼역 직결"
-                },
-                {
-                    "name": "선릉역 지하공간",
-                    "address": "서울 강남구 선릉로 지하",
-                    "lat": 37.5044,
-                    "lon": 127.0463,
-                    "capacity": 2000,
-                    "distance": 900,
-                    "walk_time": 11,
-                    "type": "지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": False,
-                    "subway": "2호선/분당선 선릉역 직결"
-                }
-            ]
-        },
-        "해운대구": {
-            "earthquake": [
-                {
-                    "name": "해운대해수욕장 광장",
-                    "address": "부산 해운대구 우동 1394",
-                    "lat": 35.1587,
-                    "lon": 129.1604,
-                    "capacity": 10000,
-                    "distance": 400,
-                    "walk_time": 5,
-                    "type": "해변광장",
-                    "wheelchair": True,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 해운대역 도보 3분"
-                }
-            ],
-            "tsunami": [
-                {
-                    "name": "장산 등산로 입구",
-                    "address": "부산 해운대구 장산로",
-                    "lat": 35.1820,
-                    "lon": 129.1945,
-                    "capacity": 1500,
-                    "distance": 2100,
-                    "walk_time": 25,
-                    "type": "고지대",
-                    "elevation": "해발 50m",
-                    "wheelchair": False,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "2호선 장산역 도보 15분"
-                }
-            ]
-        }
-    }
-
-@st.cache_data  
-def load_hospital_data():
-    return [
-        # 서울 강남구
-        {
-            "name": "강남세브란스병원",
-            "address": "서울 강남구 언주로 211",
-            "phone": "1599-1004",
-            "lat": 37.4926,
-            "lon": 127.0826,
-            "distance": 1100,
-            "emergency_24": True,
-            "beds": 1800,
-            "subway": "지하철 9호선 신논현역 도보 5분",
-            "specialties": ["응급의학과", "외상센터", "심혈관센터"],
-            "region": "강남구"
-        },
-        {
-            "name": "삼성서울병원",
-            "address": "서울 강남구 일원로 81", 
-            "phone": "1599-3114",
-            "lat": 37.4881,
-            "lon": 127.0857,
-            "distance": 2300,
-            "emergency_24": True,
-            "beds": 1900,
-            "subway": "지하철 2호선 삼성역 도보 10분",
-            "specialties": ["응급의학과", "외상센터", "중환자실"],
-            "region": "강남구"
-        },
-        {
-            "name": "서울아산병원",
-            "address": "서울 송파구 올림픽로 43길 88",
-            "phone": "1688-7575",
-            "lat": 37.5268,
-            "lon": 127.1073,
-            "distance": 3000,
-            "emergency_24": True,
-            "beds": 2700,
-            "subway": "지하철 9호선 석촌고분역 도보 8분",
-            "specialties": ["응급의학과", "외상센터", "심장센터"],
-            "region": "강남구"
-        },
-        # 서울 종로구
-        {
-            "name": "서울대학교병원",
-            "address": "서울 종로구 대학로 101",
-            "phone": "1588-5700",
-            "lat": 37.5792,
-            "lon": 126.9965,
-            "distance": 800,
-            "emergency_24": True,
-            "beds": 1700,
-            "subway": "지하철 4호선 혜화역 도보 10분",
-            "specialties": ["응급의학과", "외상센터", "신경센터"],
-            "region": "종로구"
-        },
-        # 부산 해운대구
-        {
-            "name": "인제대학교 해운대백병원",
-            "address": "부산 해운대구 해운대로 875",
-            "phone": "051-797-0369",
-            "lat": 35.1581,
-            "lon": 129.1754,
-            "distance": 800,
-            "emergency_24": True, 
-            "beds": 1000,
-            "subway": "부산지하철 2호선 해운대역 도보 8분",
-            "specialties": ["응급의학과", "외상센터"],
-            "region": "해운대구"
-        },
-        {
-            "name": "좋은문화병원",
-            "address": "부산 해운대구 센텀중앙로 60",
-            "phone": "051-780-5000",
-            "lat": 35.1693,
-            "lon": 129.1295,
-            "distance": 1200,
-            "emergency_24": True,
-            "beds": 500,
-            "subway": "부산지하철 2호선 센텀시티역 도보 5분",
-            "specialties": ["응급의학과", "내과", "외과"],
-            "region": "해운대구"
-        },
-        # 부산 부산진구
-        {
-            "name": "부산대학교병원",
-            "address": "부산 서구 구덕로 179",
-            "phone": "051-240-7000",
-            "lat": 35.1043,
-            "lon": 129.0321,
-            "distance": 1800,
-            "emergency_24": True,
-            "beds": 1400,
-            "subway": "부산지하철 1호선 서대신역 도보 15분",
-            "specialties": ["응급의학과", "외상센터", "심혈관센터"],
-            "region": "부산진구"
-        },
-        {
-            "name": "동아대학교병원",
-            "address": "부산 서구 대신공원로 26",
-            "phone": "051-240-2000",
-            "lat": 35.1043,
-            "lon": 129.0321,
-            "distance": 1900,
-            "emergency_24": True,
-            "beds": 800,
-            "subway": "부산지하철 1호선 동대신역 도보 10분",
-            "specialties": ["응급의학과", "외과", "내과"],
-            "region": "부산진구"
-        },
-        # 경기 수원시
-        {
-            "name": "아주대학교병원",
-            "address": "경기 수원시 영통구 월드컵로 164",
-            "phone": "031-219-5114",
-            "lat": 37.2813,
-            "lon": 127.0438,
-            "distance": 1500,
-            "emergency_24": True,
-            "beds": 1300,
-            "subway": "분당선 성균관대역 도보 15분",
-            "specialties": ["응급의학과", "외상센터", "심혈관센터"],
-            "region": "수원시"
-        },
-        {
-            "name": "수원종합병원",
-            "address": "경기 수원시 팔달구 중부대로 365",
-            "phone": "031-230-8114",
-            "lat": 37.2636,
-            "lon": 127.0286,
-            "distance": 800,
-            "emergency_24": True,
-            "beds": 600,
-            "subway": "1호선 수원역 도보 10분",
-            "specialties": ["응급의학과", "내과", "외과"],
-            "region": "수원시"
-        },
-        # 경기 성남시
-        {
-            "name": "분당서울대학교병원",
-            "address": "경기 성남시 분당구 구미로 173번길 82",
-            "phone": "031-787-7114",
-            "lat": 37.3520,
-            "lon": 127.1244,
-            "distance": 600,
-            "emergency_24": True,
-            "beds": 900,
-            "subway": "분당선 미금역 도보 8분",
-            "specialties": ["응급의학과", "외상센터", "소아응급"],
-            "region": "성남시"
-        },
-        {
-            "name": "차의과학대학교 분당차병원",
-            "address": "경기 성남시 분당구 야탑로 59",
-            "phone": "031-780-5000",
-            "lat": 37.3515,
-            "lon": 127.1240,
-            "distance": 400,
-            "emergency_24": True,
-            "beds": 800,
-            "subway": "분당선 야탑역 도보 5분",
-            "specialties": ["응급의학과", "산부인과", "소아과"],
-            "region": "성남시"
-        },
-        # 대구 중구
-        {
-            "name": "대구가톨릭대학교병원",
-            "address": "대구 남구 두류공원로 17길 33",
-            "phone": "053-650-4114",
-            "lat": 35.8469,
-            "lon": 128.5650,
-            "distance": 1200,
-            "emergency_24": True,
-            "beds": 1500,
-            "subway": "2호선 두류역 도보 10분",
-            "specialties": ["응급의학과", "외상센터", "심혈관센터"],
-            "region": "대구중구"
-        }
-    ]
-
 # CSS 스타일링 (접근성 고려)
 def load_css():
     font_sizes = {
@@ -1182,76 +110,190 @@ def load_css():
     .stSuccess, .stWarning, .stError, .stInfo {{
         font-size: {font_sizes[font_size]} !important;
     }}
-    
-    /* 메트릭 */
-    .metric-container {{
-        font-size: {font_sizes[font_size]} !important;
-    }}
-    
-    /* 응급 버튼 강조 */
-    .emergency-button {{
-        background-color: #DC2626 !important;
-        color: white !important;
-        padding: 15px 30px !important;
-        border: none !important;
-        border-radius: 10px !important;
-        font-size: calc({font_sizes[font_size]} * 1.2) !important;
-        font-weight: bold !important;
-        cursor: pointer !important;
-        width: 100% !important;
-        margin: 10px 0 !important;
-    }}
-    
-    /* 대피소 카드 */
-    .shelter-card {{
-        border: 2px solid #E5E7EB !important;
-        border-radius: 10px !important;
-        padding: 20px !important;
-        margin: 10px 0 !important;
-        background-color: #F9FAFB !important;
-        font-size: {font_sizes[font_size]} !important;
-    }}
-    
-    /* 접근성 정보 */
-    .accessibility-info {{
-        background-color: #DBEAFE !important;
-        padding: 10px !important;
-        border-radius: 5px !important;
-        margin: 10px 0 !important;
-        font-size: {font_sizes[font_size]} !important;
-    }}
-    
-    /* 응급 연락처 */
-    .emergency-contact {{
-        background-color: #FEF3C7 !important;
-        padding: 15px !important;
-        border-radius: 10px !important;
-        border-left: 5px solid #F59E0B !important;
-        font-size: {font_sizes[font_size]} !important;
-    }}
-    
-    /* 재난 경고 */
-    .disaster-warning {{
-        background-color: #FECACA !important;
-        padding: 15px !important;
-        border-radius: 10px !important;
-        border-left: 5px solid #DC2626 !important;
-        font-size: {font_sizes[font_size]} !important;
-        margin: 20px 0 !important;
-    }}
-    
-    /* 고대비 모드 */
-    .high-contrast {{
-        background-color: #000000 !important;
-        color: #FFFFFF !important;
-    }}
-    
-    .high-contrast .stApp {{
-        background-color: #000000 !important;
-        color: #FFFFFF !important;
-    }}
     </style>
     """, unsafe_allow_html=True)
+
+# 실제 조사 데이터 (전체)
+@st.cache_data
+def load_shelter_data():
+    return {
+        "강남구": {
+            "earthquake": [
+                {
+                    "name": "도곡종합운동장",
+                    "address": "서울 강남구 매봉로 77",
+                    "lat": 37.4782,
+                    "lon": 127.0426,
+                    "capacity": 3000,
+                    "distance": 800,
+                    "walk_time": 10,
+                    "type": "축구장",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "3호선 도곡역 도보 8분"
+                },
+                {
+                    "name": "개포중학교",
+                    "address": "서울 강남구 개포로 621", 
+                    "lat": 37.4816,
+                    "lon": 127.0663,
+                    "capacity": 800,
+                    "distance": 1200,
+                    "walk_time": 15,
+                    "type": "야외운동장",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "3호선 개포동역 도보 5분"
+                }
+            ],
+            "flood": [
+                {
+                    "name": "강남구민회관",
+                    "address": "서울 강남구 학동로 426",
+                    "lat": 37.5172,
+                    "lon": 127.0473,
+                    "capacity": 500,
+                    "distance": 600,
+                    "walk_time": 8,
+                    "type": "견고한 건물",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "7호선 강남구청역 도보 1분"
+                }
+            ],
+            "war": [
+                {
+                    "name": "강남역 지하상가",
+                    "address": "서울 강남구 강남대로 지하 390",
+                    "lat": 37.4979,
+                    "lon": 127.0276,
+                    "capacity": 3000,
+                    "distance": 500,
+                    "walk_time": 6,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "2호선/신분당선 강남역 직결"
+                }
+            ]
+        },
+        "해운대구": {
+            "earthquake": [
+                {
+                    "name": "해운대해수욕장 광장",
+                    "address": "부산 해운대구 우동 1394",
+                    "lat": 35.1587,
+                    "lon": 129.1604,
+                    "capacity": 10000,
+                    "distance": 400,
+                    "walk_time": 5,
+                    "type": "해변광장",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "2호선 해운대역 도보 3분"
+                }
+            ],
+            "tsunami": [
+                {
+                    "name": "장산 등산로 입구",
+                    "address": "부산 해운대구 장산로",
+                    "lat": 35.1820,
+                    "lon": 129.1945,
+                    "capacity": 1500,
+                    "distance": 2100,
+                    "walk_time": 25,
+                    "type": "고지대",
+                    "elevation": "해발 50m",
+                    "wheelchair": False,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "2호선 장산역 도보 15분"
+                },
+                {
+                    "name": "달맞이길 공원",
+                    "address": "부산 해운대구 달맞이길",
+                    "lat": 35.1535,
+                    "lon": 129.1732,
+                    "capacity": 800,
+                    "distance": 1800,
+                    "walk_time": 22,
+                    "type": "고지대 공원",
+                    "elevation": "해발 30m",
+                    "wheelchair": False,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "2호선 해운대역 도보 20분"
+                }
+            ]
+        },
+        "대구중구": {
+            "earthquake": [
+                {
+                    "name": "국채보상운동기념공원",
+                    "address": "대구 중구 공평로 30",
+                    "lat": 35.8682,
+                    "lon": 128.5953,
+                    "capacity": 3000,
+                    "distance": 500,
+                    "walk_time": 6,
+                    "type": "공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "1호선 중앙로역 도보 5분"
+                }
+            ]
+        }
+    }
+
+@st.cache_data  
+def load_hospital_data():
+    return [
+        {
+            "name": "강남세브란스병원",
+            "address": "서울 강남구 언주로 211",
+            "phone": "1599-1004",
+            "lat": 37.4926,
+            "lon": 127.0826,
+            "distance": 1100,
+            "emergency_24": True,
+            "beds": 1800,
+            "subway": "지하철 9호선 신논현역 도보 5분",
+            "specialties": ["응급의학과", "외상센터", "심혈관센터"],
+            "region": "강남구"
+        },
+        {
+            "name": "인제대학교 해운대백병원",
+            "address": "부산 해운대구 해운대로 875",
+            "phone": "051-797-0369",
+            "lat": 35.1581,
+            "lon": 129.1754,
+            "distance": 800,
+            "emergency_24": True, 
+            "beds": 1000,
+            "subway": "부산지하철 2호선 해운대역 도보 8분",
+            "specialties": ["응급의학과", "외상센터"],
+            "region": "해운대구"
+        },
+        {
+            "name": "대구가톨릭대학교병원",
+            "address": "대구 남구 두류공원로 17길 33",
+            "phone": "053-650-4114",
+            "lat": 35.8469,
+            "lon": 128.5650,
+            "distance": 1200,
+            "emergency_24": True,
+            "beds": 1500,
+            "subway": "2호선 두류역 도보 10분",
+            "specialties": ["응급의학과", "외상센터", "심혈관센터"],
+            "region": "대구중구"
+        }
+    ]
 
 # 음성 안내 기능
 def speak_text(text, speed=1.2):
@@ -1377,87 +419,11 @@ def main():
                 color: #FFFFFF !important;
                 border: 2px solid #FFFFFF !important;
             }
-            
-            .stButton > button:hover {
-                background-color: #555555 !important;
-                color: #FFFFFF !important;
-            }
-            
-            /* 입력창 고대비 */
-            .stSelectbox > div > div, .stTextInput > div > div > input {
-                background-color: #333333 !important;
-                color: #FFFFFF !important;
-                border: 2px solid #FFFFFF !important;
-            }
-            
-            /* 탭 고대비 */
-            .stTabs [data-baseweb="tab-list"] {
-                background-color: #1a1a1a !important;
-            }
-            
-            .stTabs [data-baseweb="tab-list"] button {
-                background-color: #333333 !important;
-                color: #FFFFFF !important;
-                border: 1px solid #FFFFFF !important;
-            }
-            
-            .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
-                background-color: #555555 !important;
-                color: #FFFFFF !important;
-            }
-            
-            /* 확장창 고대비 */
-            .streamlit-expanderHeader {
-                background-color: #333333 !important;
-                color: #FFFFFF !important;
-                border: 1px solid #FFFFFF !important;
-            }
-            
-            /* 알림 메시지 고대비 */
-            .stAlert {
-                background-color: #333333 !important;
-                color: #FFFFFF !important;
-                border: 2px solid #FFFFFF !important;
-            }
-            
-            /* 성공/경고 메시지 고대비 */
-            .stSuccess {
-                background-color: #1a4d1a !important;
-                color: #FFFFFF !important;
-                border: 2px solid #00FF00 !important;
-            }
-            
-            .stWarning {
-                background-color: #4d4d1a !important;
-                color: #FFFFFF !important;
-                border: 2px solid #FFFF00 !important;
-            }
-            
-            .stError {
-                background-color: #4d1a1a !important;
-                color: #FFFFFF !important;
-                border: 2px solid #FF0000 !important;
-            }
-            
-            .stInfo {
-                background-color: #1a1a4d !important;
-                color: #FFFFFF !important;
-                border: 2px solid #0099FF !important;
-            }
             </style>
             """, unsafe_allow_html=True)
             
             # 고대비 모드 상태 표시
-            st.success("🌓 고대비 모드가 활성화되었습니다! (검정 배경 + 흰 글씨)")
-        else:
-            # 고대비 모드 해제 시 알림
-            if st.session_state.get('high_contrast_was_on', False):
-                st.info("🌕 고대비 모드가 해제되었습니다!")
-            st.session_state.high_contrast_was_on = False
-        
-        # 고대비 모드 상태 추적
-        if high_contrast:
-            st.session_state.high_contrast_was_on = True
+            st.success("🌓 고대비 모드가 활성화되었습니다!")
         
         # 애니메이션 줄이기
         reduce_motion = st.checkbox("🚫 애니메이션 줄이기", value=st.session_state.get('reduce_motion', False))
@@ -1470,113 +436,14 @@ def main():
             *, *::before, *::after {
                 animation-duration: 0s !important;
                 animation-delay: 0s !important;
-                animation-iteration-count: 1 !important;
                 transition-duration: 0s !important;
                 transition-delay: 0s !important;
-                scroll-behavior: auto !important;
-            }
-            
-            /* Streamlit 특정 애니메이션 제거 */
-            .stApp {
-                animation: none !important;
-                transition: none !important;
-            }
-            
-            /* 로딩 스피너 애니메이션 제거 */
-            .stSpinner {
-                animation: none !important;
-            }
-            
-            /* 버튼 호버 효과 제거 */
-            .stButton > button {
-                transition: none !important;
-            }
-            
-            .stButton > button:hover {
-                transition: none !important;
-                transform: none !important;
-            }
-            
-            /* 탭 전환 애니메이션 제거 */
-            .stTabs [data-baseweb="tab-list"] button {
-                transition: none !important;
-            }
-            
-            /* 확장창 애니메이션 제거 */
-            .streamlit-expanderHeader {
-                transition: none !important;
-            }
-            
-            .streamlit-expanderContent {
-                transition: none !important;
-                animation: none !important;
-            }
-            
-            /* 사이드바 애니메이션 제거 */
-            .css-1d391kg {
-                transition: none !important;
-                animation: none !important;
-            }
-            
-            /* 알림 메시지 애니메이션 제거 */
-            .stAlert, .stSuccess, .stWarning, .stError, .stInfo {
-                animation: none !important;
-                transition: none !important;
-            }
-            
-            /* 입력창 포커스 애니메이션 제거 */
-            .stSelectbox > div > div, .stTextInput > div > div > input {
-                transition: none !important;
-            }
-            
-            /* 체크박스 애니메이션 제거 */
-            .stCheckbox {
-                transition: none !important;
-            }
-            
-            /* 프로그레스 바 애니메이션 제거 */
-            .stProgress .progress-bar {
-                transition: none !important;
-                animation: none !important;
-            }
-            
-            /* 스크롤 애니메이션 제거 */
-            html {
-                scroll-behavior: auto !important;
-            }
-            
-            /* CSS prefers-reduced-motion 적용 */
-            @media (prefers-reduced-motion: reduce) {
-                *, *::before, *::after {
-                    animation-duration: 0.01ms !important;
-                    animation-iteration-count: 1 !important;
-                    transition-duration: 0.01ms !important;
-                    scroll-behavior: auto !important;
-                }
             }
             </style>
             """, unsafe_allow_html=True)
             
             # 애니메이션 줄이기 상태 표시
-            st.success("🚫 애니메이션이 모두 비활성화되었습니다! (전정 장애 배려)")
-        else:
-            # 애니메이션 복원 시 알림
-            if st.session_state.get('reduce_motion_was_on', False):
-                st.info("✨ 애니메이션이 다시 활성화되었습니다!")
-            st.session_state.reduce_motion_was_on = False
-        
-        # 애니메이션 상태 추적
-        if reduce_motion:
-            st.session_state.reduce_motion_was_on = True
-        
-        st.markdown("---")
-        
-        # 접근성 도움말
-        with st.expander("♿ 접근성 도움말"):
-            st.write("📝 **글씨 크기**: 시각 장애나 고령자분들을 위해 글씨를 크게 설정할 수 있습니다.")
-            st.write("🔊 **음성 안내**: 시각 장애인분들을 위한 음성 읽기 기능입니다.")
-            st.write("🌓 **고대비 모드**: 저시력자분들을 위한 검정 배경 + 흰 글씨 모드입니다.")
-            st.write("🚫 **애니메이션 줄이기**: 전정 장애나 어지럼증이 있는 분들을 위해 움직임을 줄입니다.")
+            st.success("🚫 애니메이션이 모두 비활성화되었습니다!")
     
     # 메인 탭들
     tab1, tab2, tab3 = st.tabs(["🏠 대피소 찾기", "🏥 응급의료시설", "📚 재난 행동요령"])
@@ -1588,7 +455,7 @@ def main():
             st.subheader("📍 개인정보 입력")
             
             location = st.selectbox("현재 위치를 선택하세요", 
-                                  ["", "강남구", "종로구", "해운대구", "부산진구", "수원시", "성남시", "대구중구"])
+                                  ["", "강남구", "해운대구", "대구중구"])
             
             age_group = st.selectbox("연령대", 
                                    ["", "어린이 (0-12세)", "청소년 (13-19세)", "성인 (20-64세)", "고령자 (65세 이상)"])
@@ -1765,18 +632,3 @@ def main():
                     st.write("**🏃‍♂️ 대피 행동**")
                     for action in guide["evacuation"]:
                         st.write(action)
-                
-                if st.button(f"🔊 {disaster} 행동요령 음성안내", key=f"guide_{disaster}"):
-                    speak_text(f"{disaster} 발생시 행동요령을 안내드립니다.")
-    
-    # 푸터
-    st.markdown("---")
-    st.markdown("""
-    <div style='text-align: center; color: #6B7280; padding: 20px;'>
-    <p>🚨 재난 불평등 해소 프로젝트 | 모든 시민의 안전한 대피를 위해</p>
-    <p>📞 응급상황 시: 119 (소방서) | 112 (경찰서) | 1588-5117 (재난안전상황실)</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-if __name__ == "__main__":
-    main()
