@@ -524,12 +524,115 @@ def main():
         if high_contrast:
             st.markdown("""
             <style>
+            /* 고대비 모드 - 검정 배경 + 흰 글씨 */
             .stApp {
                 background-color: #000000 !important;
                 color: #FFFFFF !important;
             }
+            
+            .stApp .main {
+                background-color: #000000 !important;
+                color: #FFFFFF !important;
+            }
+            
+            .stApp div, .stApp p, .stApp span, .stApp h1, .stApp h2, .stApp h3 {
+                background-color: #000000 !important;
+                color: #FFFFFF !important;
+            }
+            
+            /* 사이드바도 고대비 */
+            .css-1d391kg {
+                background-color: #1a1a1a !important;
+                color: #FFFFFF !important;
+            }
+            
+            /* 버튼 고대비 */
+            .stButton > button {
+                background-color: #333333 !important;
+                color: #FFFFFF !important;
+                border: 2px solid #FFFFFF !important;
+            }
+            
+            .stButton > button:hover {
+                background-color: #555555 !important;
+                color: #FFFFFF !important;
+            }
+            
+            /* 입력창 고대비 */
+            .stSelectbox > div > div, .stTextInput > div > div > input {
+                background-color: #333333 !important;
+                color: #FFFFFF !important;
+                border: 2px solid #FFFFFF !important;
+            }
+            
+            /* 탭 고대비 */
+            .stTabs [data-baseweb="tab-list"] {
+                background-color: #1a1a1a !important;
+            }
+            
+            .stTabs [data-baseweb="tab-list"] button {
+                background-color: #333333 !important;
+                color: #FFFFFF !important;
+                border: 1px solid #FFFFFF !important;
+            }
+            
+            .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
+                background-color: #555555 !important;
+                color: #FFFFFF !important;
+            }
+            
+            /* 확장창 고대비 */
+            .streamlit-expanderHeader {
+                background-color: #333333 !important;
+                color: #FFFFFF !important;
+                border: 1px solid #FFFFFF !important;
+            }
+            
+            /* 알림 메시지 고대비 */
+            .stAlert {
+                background-color: #333333 !important;
+                color: #FFFFFF !important;
+                border: 2px solid #FFFFFF !important;
+            }
+            
+            /* 성공/경고 메시지 고대비 */
+            .stSuccess {
+                background-color: #1a4d1a !important;
+                color: #FFFFFF !important;
+                border: 2px solid #00FF00 !important;
+            }
+            
+            .stWarning {
+                background-color: #4d4d1a !important;
+                color: #FFFFFF !important;
+                border: 2px solid #FFFF00 !important;
+            }
+            
+            .stError {
+                background-color: #4d1a1a !important;
+                color: #FFFFFF !important;
+                border: 2px solid #FF0000 !important;
+            }
+            
+            .stInfo {
+                background-color: #1a1a4d !important;
+                color: #FFFFFF !important;
+                border: 2px solid #0099FF !important;
+            }
             </style>
             """, unsafe_allow_html=True)
+            
+            # 고대비 모드 상태 표시
+            st.success("🌓 고대비 모드가 활성화되었습니다! (검정 배경 + 흰 글씨)")
+        else:
+            # 고대비 모드 해제 시 알림
+            if st.session_state.get('high_contrast_was_on', False):
+                st.info("🌕 고대비 모드가 해제되었습니다!")
+            st.session_state.high_contrast_was_on = False
+        
+        # 고대비 모드 상태 추적
+        if high_contrast:
+            st.session_state.high_contrast_was_on = True
         
         # 애니메이션 줄이기
         reduce_motion = st.checkbox("🚫 애니메이션 줄이기")
