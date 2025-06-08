@@ -1188,7 +1188,9 @@ def main():
             
             disaster_types = {
                 "지진": {"icon": "🌍", "description": "야외 넓은 공간으로 대피"},
-                "홍수/태풍": {"icon": "🌊", "description": "견고한 건물로 대피"},
+                "태풍": {"icon": "🌀", "description": "견고한 건물로 대피"},
+                "호우": {"icon": "🌧️", "description": "침수 위험지역 피하기"},
+                "홍수": {"icon": "🌊", "description": "견고한 건물로 대피"},
                 "전쟁/테러": {"icon": "⚔️", "description": "지하 대피소로 이동"},
                 "지진해일": {"icon": "🌊", "description": "고지대로 긴급 대피"}
             }
@@ -1216,7 +1218,9 @@ def main():
                     
                     disaster_map = {
                         "지진": "earthquake",
-                        "홍수/태풍": "flood", 
+                        "태풍": "flood",
+                        "호우": "flood", 
+                        "홍수": "flood",
                         "전쟁/테러": "war",
                         "지진해일": "tsunami"
                     }
@@ -1265,7 +1269,7 @@ def main():
                         if available_disasters:
                             disaster_names = {
                                 "earthquake": "지진",
-                                "flood": "홍수/태풍", 
+                                "flood": "홍수/태풍/호우", 
                                 "war": "전쟁/테러",
                                 "tsunami": "지진해일"
                             }
@@ -1320,6 +1324,59 @@ def main():
                     "4. 여진에 대비하여 안전한 곳에서 대기하세요"
                 ]
             },
+            "태풍": {
+                "preparation": [
+                    "1. TV, 라디오, 인터넷으로 태풍 정보를 수시로 확인하세요",
+                    "2. 가족과 함께 대피 장소와 경로를 미리 정해두세요",
+                    "3. 산간, 계곡, 하천, 방파제 등 위험지역은 절대 접근하지 마세요",
+                    "4. 낡은 창문을 교체하고 유리창에 안전필름을 붙이세요",
+                    "5. 구급약, 손전등, 식수, 간편식 등을 비상배낭에 준비하세요"
+                ],
+                "during": [
+                    "1. 외출을 삼가고 기상 상황을 수시로 확인하세요",
+                    "2. 침수된 도로, 지하차도, 교량은 절대 접근하지 마세요",
+                    "3. 건물 출입문과 창문을 닫고 유리창에서 떨어진 곳에 머무세요",
+                    "4. 가스는 미리 차단하고 전기시설은 절대 만지지 마세요",
+                    "5. 실내에 물이 차오르면 즉시 높은 곳으로 이동하세요"
+                ],
+                "after": [
+                    "1. 가족과 지인에게 연락하여 안전 여부를 확인하세요",
+                    "2. 침수된 도로와 교량은 파손 위험이 있으므로 건너지 마세요",
+                    "3. 파손된 시설물은 시·군·구청에 신고하세요",
+                    "4. 침수된 주택은 가스·전기 안전점검 후 사용하세요",
+                    "5. 수돗물과 식수는 오염 여부 확인 후 사용하세요"
+                ]
+            },
+            "호우": {
+                "preparation": [
+                    "1. 우리 지역의 홍수, 침수, 산사태 위험요소를 미리 확인하세요",
+                    "2. TV, 라디오, 안전디딤돌 앱으로 재난정보를 받을 수 있도록 준비하세요",
+                    "3. 대피 장소, 이동 방법을 숙지하고 가족과 약속을 정하세요",
+                    "4. 응급약품, 손전등, 식수, 비상식량을 비상용 키트로 준비하세요",
+                    "5. 비상용품 유효기간을 주기적으로 확인하세요"
+                ],
+                "forecast": [
+                    "1. TV, 라디오, 안전디딤돌 앱으로 호우 예보를 확인하세요",
+                    "2. 산간, 계곡, 하천에서 야영이나 물놀이는 즉시 중단하세요",
+                    "3. 차량은 하천, 해변, 저지대에서 안전한 곳으로 이동시키세요",
+                    "4. 하수구, 배수구가 막히지 않았는지 점검하고 청소하세요",
+                    "5. 외출을 자제하고 어르신, 어린이의 안부를 확인하세요"
+                ],
+                "during": [
+                    "1. TV, 라디오로 기상정보를 지속적으로 확인하세요",
+                    "2. 침수지역, 산간·계곡은 절대 접근하지 말고 즉시 대피하세요",
+                    "3. 건물 출입문과 창문을 단단히 닫고 창문 없는 방으로 이동하세요",
+                    "4. 가스는 사전 차단하고 젖은 손으로 전기시설을 만지지 마세요",
+                    "5. 대피가 어려운 분들을 함께 도와주세요"
+                ],
+                "after": [
+                    "1. 가족 및 지인에게 연락하여 안전 여부를 확인하세요",
+                    "2. 집의 구조적 안전을 먼저 확인하고 출입하세요",
+                    "3. 파손된 시설물은 시·군·구청에 신고하세요",
+                    "4. 침수된 도로, 교량은 붕괴 위험이 있어 접근하지 마세요",
+                    "5. 수돗물과 식수는 오염 여부 확인 후 사용하세요"
+                ]
+            },
             "화재": {
                 "immediate": [
                     "1. 불이야!를 크게 외치세요",
@@ -1338,17 +1395,60 @@ def main():
         
         for disaster, guide in disaster_guides.items():
             with st.expander(f"🚨 {disaster} 발생 시", expanded=False):
-                col1, col2 = st.columns(2)
+                if disaster == "태풍":
+                    # 태풍은 3단계로 구분
+                    col1, col2, col3 = st.columns(3)
+                    
+                    with col1:
+                        st.write("**📋 태풍 예보 시**")
+                        for action in guide["preparation"]:
+                            st.write(action)
+                    
+                    with col2:
+                        st.write("**🌀 태풍 특보 중**")
+                        for action in guide["during"]:
+                            st.write(action)
+                    
+                    with col3:
+                        st.write("**✅ 태풍 이후**")
+                        for action in guide["after"]:
+                            st.write(action)
                 
-                with col1:
-                    st.write("**⚡ 즉시 행동**")
-                    for action in guide["immediate"]:
-                        st.write(action)
+                elif disaster == "호우":
+                    # 호우는 4단계로 구분
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.write("**📋 호우 사전준비**")
+                        for action in guide["preparation"]:
+                            st.write(action)
+                        
+                        st.write("**🌧️ 호우 예보 시**")
+                        for action in guide["forecast"]:
+                            st.write(action)
+                    
+                    with col2:
+                        st.write("**⚡ 호우 특보 중**")
+                        for action in guide["during"]:
+                            st.write(action)
+                        
+                        st.write("**✅ 호우 이후**")
+                        for action in guide["after"]:
+                            st.write(action)
                 
-                with col2:
-                    st.write("**🏃‍♂️ 대피 행동**")
-                    for action in guide["evacuation"]:
-                        st.write(action)
+                else:
+                    # 기존 2단계 형식 (지진, 화재 등)
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.write("**⚡ 즉시 행동**")
+                        for action in guide["immediate"]:
+                            st.write(action)
+                    
+                    with col2:
+                        st.write("**🏃‍♂️ 대피 행동**")
+                        for action in guide["evacuation"]:
+                            st.write(action)
                 
                 # 음성 안내 버튼
                 if st.button(f"🔊 {disaster} 행동요령 음성안내", key=f"guide_{disaster}"):
