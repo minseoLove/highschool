@@ -275,29 +275,43 @@ def load_hospital_data():
     ]
 
 # 음성 안내 기능 (실제 TTS 구현)
-def speak_text(text):
+def speak_text(text, speed=1.0):
     if st.session_state.get('voice_enabled', False):
         # 화면에 표시
         st.info(f"🔊 음성 안내: {text}")
+        
+        # 텍스트 정리 (HTML 태그 제거 등)
+        clean_text = text.replace("**", "").replace("*", "").replace("#", "")
         
         # HTML5 Speech Synthesis API 사용
         speech_js = f"""
         <script>
         if ('speechSynthesis' in window) {{
-            var utterance = new SpeechSynthesisUtterance('{text}');
+            var utterance = new SpeechSynthesisUtterance(`{clean_text}`);
             utterance.lang = 'ko-KR';
-            utterance.rate = 0.8;
+            utterance.rate = {speed};
             utterance.pitch = 1.0;
-            utterance.volume = 0.8;
+            utterance.volume = 0.9;
             
             // 한국어 음성 찾기
-            var voices = speechSynthesis.getVoices();
-            var koreanVoice = voices.find(voice => voice.lang.includes('ko'));
-            if (koreanVoice) {{
-                utterance.voice = koreanVoice;
-            }}
+            speechSynthesis.onvoiceschanged = function() {{
+                var voices = speechSynthesis.getVoices();
+                var koreanVoice = voices.find(voice => voice.lang.includes('ko'));
+                if (koreanVoice) {{
+                    utterance.voice = koreanVoice;
+                }}
+                speechSynthesis.speak(utterance);
+            }};
             
-            speechSynthesis.speak(utterance);
+            // 이미 음성이 로드된 경우
+            var voices = speechSynthesis.getVoices();
+            if (voices.length > 0) {{
+                var koreanVoice = voices.find(voice => voice.lang.includes('ko'));
+                if (koreanVoice) {{
+                    utterance.voice = koreanVoice;
+                }}
+                speechSynthesis.speak(utterance);
+            }}
         }} else {{
             console.log('음성 합성을 지원하지 않는 브라우저입니다.');
         }}
@@ -306,6 +320,27 @@ def speak_text(text):
         
         # JavaScript 실행
         st.components.v1.html(speech_js, height=0)
+
+# 재난 행동요령 전체 읽기
+def speak_disaster_guide(disaster_name, guide_data):
+    if st.session_state.get('voice_enabled', False):
+        # 전체 행동요령 텍스트 구성
+        full_text = f"{disaster_name} 발생시 행동요령을 안내드립니다. "
+        
+        full_text += "먼저 즉시 행동 요령입니다. "
+        for i, action in enumerate(guide_data["immediate"], 1):
+            clean_action = action.replace("**", "").replace("*", "").replace(f"{i}. ", "")
+            full_text += f"{i}번째, {clean_action}. "
+        
+        full_text += "다음은 대피 행동 요령입니다. "
+        for i, action in enumerate(guide_data["evacuation"], 1):
+            clean_action = action.replace("**", "").replace("*", "").replace(f"{i}. ", "")
+            full_text += f"{i}번째, {clean_action}. "
+        
+        full_text += "이상으로 행동요령 안내를 마치겠습니다. 안전에 유의하세요."
+        
+        # 긴급상황용 빠른 속도로 읽기
+        speak_text(full_text, speed=1.3)
 
 # 거리 계산 함수
 def calculate_distance(lat1, lon1, lat2, lon2):
@@ -637,18 +672,46 @@ def main():
                     "4. 여진에 대비하여 안전한 곳에서 대기하세요"
                 ]
             },
-            "화재": {
+                                        "화재": {
                 "immediate": [
-                    "1. '불이야!'를 크게 외치세요",
-                    "2. 119에 신고하세요",
+                    "1. 불이야!를 크게 외치세요",
+                    "2. 119에 즉시 신고하세요", 
                     "3. 자세를 낮추고 벽을 따라 이동하세요",
                     "4. 연기가 많으면 젖은 수건으로 입과 코를 막으세요"
                 ],
                 "evacuation": [
                     "1. 계단을 이용하여 아래층으로 피하세요",
-                    "2. 엘리베이터 사용 절대 금지",
-                    "3. 문을 만져보고 뜨거우면 다른 출구를 찾으세요",
+                    "2. 엘리베이터 사용을 절대 금지합니다",
+                    "3. 문을 만져보고 뜨거우면 다른 출구를 찾으세요", 
                     "4. 바람의 반대 방향으로 대피하세요"
+                ]
+            },
+            "태풍": {
+                "immediate": [
+                    "1. 기상청 태풍 경보를 지속적으로 확인하세요",
+                    "2. 외출을 자제하고 실내에 머무르세요",
+                    "3. 창문과 출입문을 단단히 잠그세요",
+                    "4. 응급용품과 비상식량을 준비하세요"
+                ],
+                "evacuation": [
+                    "1. 견고한 건물 내부로 대피하세요",
+                    "2. 지하실이나 반지하는 피하세요",
+                    "3. 고지대의 안전한 대피소로 이동하세요",
+                    "4. 대피 시 차량 이용을 피하고 도보로 이동하세요"
+                ]
+            },
+            "지진해일": {
+                "immediate": [
+                    "1. 해안가에 있다면 즉시 내륙으로 이동하세요",
+                    "2. 지진해일 경보를 확인하세요",
+                    "3. 높은 건물 3층 이상으로 대피하세요",
+                    "4. 차량을 버리고 도보로 신속히 이동하세요"
+                ],
+                "evacuation": [
+                    "1. 해발 10미터 이상 고지대로 대피하세요",
+                    "2. 해안에서 최대한 멀리 떨어진 곳으로 가세요",
+                    "3. 지진해일 특보 해제까지 해안에 접근하지 마세요",
+                    "4. 여러 차례 파도가 올 수 있으니 계속 주의하세요"
                 ]
             }
         }
@@ -667,8 +730,26 @@ def main():
                     for action in guide["evacuation"]:
                         st.write(action)
                 
-                if st.button(f"🔊 {disaster} 행동요령 음성안내", key=f"guide_{disaster}"):
-                    speak_text(f"{disaster} 발생시 행동요령을 안내드립니다.")
+                if st.button(f"🔊 {disaster} 전체 행동요령 음성안내", key=f"guide_full_{disaster}"):
+                    speak_disaster_guide(disaster, guide)
+                
+                # 단계별 음성안내 버튼도 추가
+                col_a, col_b = st.columns(2)
+                with col_a:
+                    if st.button(f"🔊 즉시행동 안내", key=f"immediate_{disaster}"):
+                        immediate_text = f"{disaster} 즉시 행동 요령입니다. "
+                        for i, action in enumerate(guide["immediate"], 1):
+                            clean_action = action.replace("**", "").replace("*", "").replace(f"{i}. ", "")
+                            immediate_text += f"{i}번째, {clean_action}. "
+                        speak_text(immediate_text, speed=1.3)
+                
+                with col_b:
+                    if st.button(f"🔊 대피행동 안내", key=f"evacuation_{disaster}"):
+                        evacuation_text = f"{disaster} 대피 행동 요령입니다. "
+                        for i, action in enumerate(guide["evacuation"], 1):
+                            clean_action = action.replace("**", "").replace("*", "").replace(f"{i}. ", "")
+                            evacuation_text += f"{i}번째, {clean_action}. "
+                        speak_text(evacuation_text, speed=1.3)
     
     # 푸터
     st.markdown("---")
