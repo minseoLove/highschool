@@ -487,20 +487,20 @@ def main():
         st.markdown("**📝 글씨 크기 미리보기:**")
         st.markdown(f"""
         <div style="border: 2px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 10px; background-color: #f8f9fa;">
-        <p style="font-size: 14px; margin: 5px 0; color: {'#DC2626' if font_size == '소형' else '#666'};">
+        <p style="font-size: 14px !important; margin: 8px 0; color: {'#DC2626' if font_size == '소형' else '#666'}; line-height: 1.2;">
         {'🔴 ' if font_size == '소형' else '⚪ '}소형: 안전한 대피를 위해
         </p>
-        <p style="font-size: 16px; margin: 5px 0; color: {'#DC2626' if font_size == '보통' else '#666'};">
+        <p style="font-size: 18px !important; margin: 10px 0; color: {'#DC2626' if font_size == '보통' else '#666'}; line-height: 1.3;">
         {'🔴 ' if font_size == '보통' else '⚪ '}보통: 안전한 대피를 위해
         </p>
-        <p style="font-size: 20px; margin: 5px 0; color: {'#DC2626' if font_size == '대형' else '#666'};">
+        <p style="font-size: 22px !important; margin: 12px 0; color: {'#DC2626' if font_size == '대형' else '#666'}; line-height: 1.4;">
         {'🔴 ' if font_size == '대형' else '⚪ '}대형: 안전한 대피를 위해
         </p>
-        <p style="font-size: 24px; margin: 5px 0; color: {'#DC2626' if font_size == '특대' else '#666'};">
+        <p style="font-size: 28px !important; margin: 15px 0; color: {'#DC2626' if font_size == '특대' else '#666'}; line-height: 1.5; font-weight: bold;">
         {'🔴 ' if font_size == '특대' else '⚪ '}특대: 안전한 대피를 위해
         </p>
-        <hr style="margin: 10px 0;">
-        <p style="color: #DC2626; font-weight: bold; font-size: 16px; text-align: center;">
+        <hr style="margin: 15px 0; border: 1px solid #ddd;">
+        <p style="color: #DC2626; font-weight: bold; font-size: 16px !important; text-align: center; background-color: #FEF2F2; padding: 10px; border-radius: 5px;">
         ✅ 현재 선택: {font_size}
         </p>
         </div>
