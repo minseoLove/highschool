@@ -483,14 +483,26 @@ def main():
             st.session_state.font_size = font_size
             st.rerun()  # 페이지 새로고침하여 CSS 재적용
         
-        # 실시간 글씨 크기 미리보기
+        # 실시간 글씨 크기 미리보기 (각 크기별로 실제 크기 표시)
+        st.markdown("**📝 글씨 크기 미리보기:**")
         st.markdown(f"""
-        <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px;">
-        <p style="font-size: 14px;">소형: 안전한 대피를 위해</p>
-        <p style="font-size: 16px;">보통: 안전한 대피를 위해</p>
-        <p style="font-size: 20px;">대형: 안전한 대피를 위해</p>
-        <p style="font-size: 24px;">특대: 안전한 대피를 위해</p>
-        <p style="color: red; font-weight: bold;">현재 선택: {font_size}</p>
+        <div style="border: 2px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 10px; background-color: #f8f9fa;">
+        <p style="font-size: 14px; margin: 5px 0; color: {'#DC2626' if font_size == '소형' else '#666'};">
+        {'🔴 ' if font_size == '소형' else '⚪ '}소형: 안전한 대피를 위해
+        </p>
+        <p style="font-size: 16px; margin: 5px 0; color: {'#DC2626' if font_size == '보통' else '#666'};">
+        {'🔴 ' if font_size == '보통' else '⚪ '}보통: 안전한 대피를 위해
+        </p>
+        <p style="font-size: 20px; margin: 5px 0; color: {'#DC2626' if font_size == '대형' else '#666'};">
+        {'🔴 ' if font_size == '대형' else '⚪ '}대형: 안전한 대피를 위해
+        </p>
+        <p style="font-size: 24px; margin: 5px 0; color: {'#DC2626' if font_size == '특대' else '#666'};">
+        {'🔴 ' if font_size == '특대' else '⚪ '}특대: 안전한 대피를 위해
+        </p>
+        <hr style="margin: 10px 0;">
+        <p style="color: #DC2626; font-weight: bold; font-size: 16px; text-align: center;">
+        ✅ 현재 선택: {font_size}
+        </p>
         </div>
         """, unsafe_allow_html=True)
         
