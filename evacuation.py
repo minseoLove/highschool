@@ -1,12 +1,23 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import folium
-from streamlit_folium import folium_static
-import requests
-import json
 from datetime import datetime
 import time
+
+# folium 관련 패키지 선택적 import
+try:
+    import folium
+    from streamlit_folium import folium_static
+    FOLIUM_AVAILABLE = True
+except ImportError:
+    FOLIUM_AVAILABLE = False
+    st.warning("🗺️ 지도 기능을 위해 다음 명령어를 실행해주세요: pip install folium streamlit-folium")
+
+try:
+    import requests
+    REQUESTS_AVAILABLE = True
+except ImportError:
+    REQUESTS_AVAILABLE = False
 
 # 페이지 설정
 st.set_page_config(
@@ -278,8 +289,11 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     r = 6371
     return c * r * 1000  # 미터 단위
 
-# 지도 생성 함수
+# 지도 생성 함수 (folium 사용 가능할 때만)
 def create_map(shelters, hospitals, user_location=None):
+    if not FOLIUM_AVAILABLE:
+        return None
+        
     if user_location:
         m = folium.Map(location=user_location, zoom_start=14)
     else:
@@ -311,6 +325,27 @@ def create_map(shelters, hospitals, user_location=None):
         ).add_to(m)
     
     return m
+
+# 지도 대체 함수 (folium 없을 때)
+def create_text_map(shelters, hospitals, user_location=None):
+    st.markdown("### 🗺️ 위치 정보")
+    
+    if user_location:
+        st.info(f"📍 현재 위치: {user_location[0]:.4f}, {user_location[1]:.4f}")
+    
+    st.markdown("**🏠 대피소 위치:**")
+    for i, shelter in enumerate(shelters):
+        emoji = "🥇" if i == 0 else "📍"
+        st.write(f"{emoji} **{shelter['name']}** - 위도: {shelter['lat']:.4f}, 경도: {shelter['lon']:.4f}")
+        st.write(f"   ↳ {shelter['address']} (도보 {shelter['walk_time']}분)")
+    
+    st.markdown("**🏥 병원 위치:**")
+    for hospital in hospitals:
+        st.write(f"🏥 **{hospital['name']}** - 위도: {hospital['lat']:.4f}, 경도: {hospital['lon']:.4f}")
+        st.write(f"   ↳ {hospital['address']} ({hospital['phone']})")
+    
+    if not FOLIUM_AVAILABLE:
+        st.info("💡 **지도 시각화를 원하시면:** `pip install folium streamlit-folium` 설치 후 앱을 재시작하세요!")
 
 # 메인 앱
 def main():
@@ -464,7 +499,7 @@ def main():
                         
                         st.success(f"✅ {len(shelters)}개의 {selected_disaster} 대피소를 찾았습니다!")
                         
-                        # 지도 표시
+                        # 지도 표시 (folium 사용 가능하면 지도, 아니면 텍스트)
                         if location == "강남구":
                             user_loc = [37.4979, 127.0276]
                         elif location == "해운대구":
@@ -474,8 +509,15 @@ def main():
                             
                         if user_loc:
                             relevant_hospitals = [h for h in hospital_data if location in h['address']]
-                            map_obj = create_map(shelters, relevant_hospitals, user_loc)
-                            folium_static(map_obj, width=700, height=400)
+                            
+                            if FOLIUM_AVAILABLE:
+                                # folium 지도 표시
+                                map_obj = create_map(shelters, relevant_hospitals, user_loc)
+                                if map_obj:
+                                    folium_static(map_obj, width=700, height=400)
+                            else:
+                                # 텍스트 기반 위치 정보 표시
+                                create_text_map(shelters, relevant_hospitals, user_loc)
                         
                         # 대피소 카드 표시
                         for i, shelter in enumerate(shelters):
