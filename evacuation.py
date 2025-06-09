@@ -712,7 +712,7 @@ def show_detailed_guide(disaster, guide):
                 else:
                     st.write(action)
                     st.markdown(f"### {action}")
-                elif action.startswith("•"):
+                if action.startswith("•"):
                     st.write(action)
                 elif action == "":
                     st.write("")
