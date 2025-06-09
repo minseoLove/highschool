@@ -665,7 +665,7 @@ def get_disaster_guides():
     }
     
     return guides
-            "
+            
 
 # 상세 행동요령 페이지 표시 함수
 def show_detailed_guide(disaster, guide):
