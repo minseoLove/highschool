@@ -917,7 +917,7 @@ def show_detailed_guide(disaster, guide):
     if st.button("⬅️ 재난 행동요령 목록으로 돌아가기", key="back_to_main"):
         st.session_state.show_detailed_page = False
         st.session_state.selected_disaster_detail = None
-        st.rerun()", "🚗")):
+        st.rerun(()", "🚗")):
                     st.markdown(f"### {action}")
                 elif action.startswith("•"):
                     st.write(action)
