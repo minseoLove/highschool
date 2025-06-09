@@ -132,7 +132,7 @@ def speak_text(text, speed=1.0):
 
 @st.cache_data
 def load_shelter_data():
-    return {
+   return {
         "강남구": {
             "earthquake": [
                 {
@@ -314,6 +314,487 @@ def load_shelter_data():
                     "elevator": True,
                     "parking": False,
                     "subway": "1호선 종각역 직결"
+                }
+            ]
+        },
+        
+        # 🆕 여기부터 새로 추가되는 지역들!
+        
+        "해운대구": {
+            "earthquake": [
+                {
+                    "name": "해운대해수욕장 광장",
+                    "address": "부산 해운대구 우동 1394",
+                    "lat": 35.1587,
+                    "lon": 129.1604,
+                    "capacity": 10000,
+                    "distance": 300,
+                    "walk_time": 4,
+                    "type": "해변광장",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "부산지하철 2호선 해운대역 도보 3분"
+                },
+                {
+                    "name": "센텀시티 중앙공원",
+                    "address": "부산 해운대구 센텀중앙로 55",
+                    "lat": 35.1693,
+                    "lon": 129.1295,
+                    "capacity": 3000,
+                    "distance": 800,
+                    "walk_time": 10,
+                    "type": "공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "부산지하철 2호선 센텀시티역 도보 5분"
+                },
+                {
+                    "name": "해운대스포츠센터",
+                    "address": "부산 해운대구 해운대해변로 84",
+                    "lat": 35.1598,
+                    "lon": 129.1585,
+                    "capacity": 2000,
+                    "distance": 500,
+                    "walk_time": 6,
+                    "type": "운동장",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "부산지하철 2호선 해운대역 도보 7분"
+                }
+            ],
+            "flood": [
+                {
+                    "name": "해운대구청사",
+                    "address": "부산 해운대구 해운대로 570",
+                    "lat": 35.1631,
+                    "lon": 129.1635,
+                    "capacity": 200,
+                    "distance": 400,
+                    "walk_time": 5,
+                    "type": "관공서 고지대",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "부산지하철 2호선 해운대역 도보 6분"
+                },
+                {
+                    "name": "LCT 더샵",
+                    "address": "부산 해운대구 우동 1394",
+                    "lat": 35.1587,
+                    "lon": 129.1604,
+                    "capacity": 1000,
+                    "distance": 200,
+                    "walk_time": 3,
+                    "type": "고층건물 3층 이상",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "부산지하철 2호선 해운대역 도보 2분"
+                },
+                {
+                    "name": "달맞이길 공원",
+                    "address": "부산 해운대구 달맞이길",
+                    "lat": 35.1535,
+                    "lon": 129.1732,
+                    "capacity": 800,
+                    "distance": 1200,
+                    "walk_time": 15,
+                    "type": "고지대 공원 (해발 30m)",
+                    "wheelchair": False,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "부산지하철 2호선 해운대역 도보 20분"
+                }
+            ],
+            "war": [
+                {
+                    "name": "해운대역 지하상가",
+                    "address": "부산 해운대구 해운대로 지하",
+                    "lat": 35.1593,
+                    "lon": 129.1586,
+                    "capacity": 2000,
+                    "distance": 100,
+                    "walk_time": 2,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "부산지하철 2호선 해운대역 직결"
+                },
+                {
+                    "name": "센텀시티역 지하공간",
+                    "address": "부산 해운대구 센텀중앙로 지하",
+                    "lat": 35.1693,
+                    "lon": 129.1295,
+                    "capacity": 1800,
+                    "distance": 600,
+                    "walk_time": 8,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "부산지하철 2호선 센텀시티역 직결"
+                }
+            ]
+        },
+        
+        "부산진구": {
+            "earthquake": [
+                {
+                    "name": "서면 시민공원",
+                    "address": "부산 부산진구 중앙대로 지하",
+                    "lat": 35.1579,
+                    "lon": 129.0596,
+                    "capacity": 2500,
+                    "distance": 400,
+                    "walk_time": 5,
+                    "type": "공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "부산지하철 1,2호선 서면역 도보 5분"
+                },
+                {
+                    "name": "부산시민공원",
+                    "address": "부산 부산진구 시민공원로 73",
+                    "lat": 35.1663,
+                    "lon": 129.0535,
+                    "capacity": 8000,
+                    "distance": 800,
+                    "walk_time": 10,
+                    "type": "대형공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "부산지하철 1호선 부전역 도보 12분"
+                }
+            ],
+            "flood": [
+                {
+                    "name": "부산진구청",
+                    "address": "부산 부산진구 시민공원로 30",
+                    "lat": 35.1622,
+                    "lon": 129.0539,
+                    "capacity": 400,
+                    "distance": 600,
+                    "walk_time": 8,
+                    "type": "관공서",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "부산지하철 1호선 부전역 도보 10분"
+                }
+            ],
+            "war": [
+                {
+                    "name": "서면 지하상가",
+                    "address": "부산 부산진구 서면로 지하",
+                    "lat": 35.1579,
+                    "lon": 129.0596,
+                    "capacity": 4000,
+                    "distance": 200,
+                    "walk_time": 3,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "부산지하철 1,2호선 서면역 직결"
+                },
+                {
+                    "name": "양정역 지하공간",
+                    "address": "부산 부산진구 양정로 지하",
+                    "lat": 35.1697,
+                    "lon": 129.0720,
+                    "capacity": 1500,
+                    "distance": 300,
+                    "walk_time": 4,
+                    "type": "지하철역",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "부산지하철 1호선 양정역 직결"
+                }
+            ]
+        },
+        
+        "대구중구": {
+            "earthquake": [
+                {
+                    "name": "국채보상운동기념공원",
+                    "address": "대구 중구 공평로",
+                    "lat": 35.8682,
+                    "lon": 128.5953,
+                    "capacity": 3000,
+                    "distance": 500,
+                    "walk_time": 7,
+                    "type": "공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "대구1호선 중앙로역 도보 8분"
+                },
+                {
+                    "name": "달성공원",
+                    "address": "대구 중구 달성공원로 35",
+                    "lat": 35.8743,
+                    "lon": 128.5741,
+                    "capacity": 2500,
+                    "distance": 800,
+                    "walk_time": 10,
+                    "type": "공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "대구1호선 달성공원역 도보 3분"
+                }
+            ],
+            "flood": [
+                {
+                    "name": "대구중구청",
+                    "address": "대구 중구 국채보상로 102길 88",
+                    "lat": 35.8703,
+                    "lon": 128.5911,
+                    "capacity": 300,
+                    "distance": 400,
+                    "walk_time": 5,
+                    "type": "관공서",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "대구1호선 중앙로역 도보 6분"
+                }
+            ],
+            "war": [
+                {
+                    "name": "반월당 지하상가",
+                    "address": "대구 중구 달구벌대로 지하",
+                    "lat": 35.8581,
+                    "lon": 128.5933,
+                    "capacity": 2500,
+                    "distance": 200,
+                    "walk_time": 3,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "대구1,2호선 반월당역 직결"
+                }
+            ]
+        },
+        
+        "수원시": {
+            "earthquake": [
+                {
+                    "name": "수원월드컵경기장",
+                    "address": "경기 수원시 팔달구 월드컵로 310",
+                    "lat": 37.2866,
+                    "lon": 127.0367,
+                    "capacity": 8000,
+                    "distance": 1200,
+                    "walk_time": 15,
+                    "type": "축구장",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "1호선 수원역 도보 18분"
+                },
+                {
+                    "name": "효원공원",
+                    "address": "경기 수원시 팔달구 인계로 178",
+                    "lat": 37.2642,
+                    "lon": 127.0286,
+                    "capacity": 2000,
+                    "distance": 500,
+                    "walk_time": 7,
+                    "type": "공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "1호선 수원역 도보 8분"
+                },
+                {
+                    "name": "수원종합운동장",
+                    "address": "경기 수원시 장안구 조원로 775",
+                    "lat": 37.3007,
+                    "lon": 127.0093,
+                    "capacity": 5000,
+                    "distance": 2000,
+                    "walk_time": 25,
+                    "type": "운동장",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "1호선 화서역 도보 20분"
+                }
+            ],
+            "flood": [
+                {
+                    "name": "수원시청",
+                    "address": "경기 수원시 팔달구 효원로 241",
+                    "lat": 37.2636,
+                    "lon": 127.0286,
+                    "capacity": 800,
+                    "distance": 600,
+                    "walk_time": 8,
+                    "type": "관공서",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "1호선 수원역 도보 10분"
+                },
+                {
+                    "name": "팔달구청",
+                    "address": "경기 수원시 팔달구 효원로 1",
+                    "lat": 37.2658,
+                    "lon": 127.0298,
+                    "capacity": 500,
+                    "distance": 400,
+                    "walk_time": 5,
+                    "type": "관공서",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "1호선 수원역 도보 7분"
+                }
+            ],
+            "war": [
+                {
+                    "name": "수원역 지하상가",
+                    "address": "경기 수원시 팔달구 매산로 지하",
+                    "lat": 37.2659,
+                    "lon": 127.0011,
+                    "capacity": 3000,
+                    "distance": 100,
+                    "walk_time": 2,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "1호선 수원역 직결"
+                },
+                {
+                    "name": "인계동 지하상가",
+                    "address": "경기 수원시 팔달구 인계로 지하",
+                    "lat": 37.2642,
+                    "lon": 127.0286,
+                    "capacity": 2000,
+                    "distance": 300,
+                    "walk_time": 4,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "1호선 수원역 도보 5분"
+                }
+            ]
+        },
+        
+        "성남시": {
+            "earthquake": [
+                {
+                    "name": "분당중앙공원",
+                    "address": "경기 성남시 분당구 야탑로 215",
+                    "lat": 37.3515,
+                    "lon": 127.1240,
+                    "capacity": 4000,
+                    "distance": 600,
+                    "walk_time": 8,
+                    "type": "대형공원",
+                    "wheelchair": True,
+                    "elevator": False,
+                    "parking": True,
+                    "subway": "분당선 야탑역 도보 8분"
+                },
+                {
+                    "name": "탄천종합운동장",
+                    "address": "경기 성남시 분당구 탄천로 215",
+                    "lat": 37.4058,
+                    "lon": 127.1235,
+                    "capacity": 6000,
+                    "distance": 1000,
+                    "walk_time": 12,
+                    "type": "운동장",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "분당선 수내역 도보 15분"
+                },
+                {
+                    "name": "성남종합운동장",
+                    "address": "경기 성남시 중원구 성남대로 1",
+                    "lat": 37.4198,
+                    "lon": 127.1265,
+                    "capacity": 4500,
+                    "distance": 800,
+                    "walk_time": 10,
+                    "type": "운동장",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "분당선 이매역 도보 12분"
+                }
+            ],
+            "flood": [
+                {
+                    "name": "성남시청",
+                    "address": "경기 성남시 중원구 성남대로 997",
+                    "lat": 37.4198,
+                    "lon": 127.1265,
+                    "capacity": 1000,
+                    "distance": 500,
+                    "walk_time": 7,
+                    "type": "관공서",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "분당선 이매역 도보 8분"
+                },
+                {
+                    "name": "분당구청",
+                    "address": "경기 성남시 분당구 야탑로 50",
+                    "lat": 37.3515,
+                    "lon": 127.1240,
+                    "capacity": 600,
+                    "distance": 400,
+                    "walk_time": 5,
+                    "type": "관공서",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": True,
+                    "subway": "분당선 야탑역 도보 5분"
+                }
+            ],
+            "war": [
+                {
+                    "name": "야탑역 지하상가",
+                    "address": "경기 성남시 분당구 야탑로 지하",
+                    "lat": 37.3515,
+                    "lon": 127.1240,
+                    "capacity": 2500,
+                    "distance": 200,
+                    "walk_time": 3,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "분당선 야탑역 직결"
+                },
+                {
+                    "name": "서현역 지하상가",
+                    "address": "경기 성남시 분당구 서현로 지하",
+                    "lat": 37.3836,
+                    "lon": 127.1230,
+                    "capacity": 2000,
+                    "distance": 600,
+                    "walk_time": 8,
+                    "type": "지하상가",
+                    "wheelchair": True,
+                    "elevator": True,
+                    "parking": False,
+                    "subway": "분당선 서현역 직결"
                 }
             ]
         }
