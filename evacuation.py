@@ -771,7 +771,7 @@ def show_detailed_guide(disaster, guide):
         # 기존 2단계 형식 (지진, 화재 등)
         col1, col2 = st.columns(2)
         
-         with col1:
+        with col1:
             st.markdown("## ⚡ 즉시 행동")
             if "immediate" in guide:
                 for action in guide["immediate"]:
