@@ -53,23 +53,82 @@ def load_css():
     </style>
     """, unsafe_allow_html=True)
 
-# 음성 안내 기능
-def speak_text(text, speed=1.2):
+# 음성 안내 기능 (개선된 버전)
+def speak_text(text, speed=1.0):
     if st.session_state.get('voice_enabled', False):
-        st.info(f"🔊 음성 안내: {text}")
-        clean_text = text.replace("**", "").replace("*", "").replace("#", "")
+        # 텍스트 정리
+        clean_text = text.replace("**", "").replace("*", "").replace("#", "").replace("•", "").replace("🔍", "").replace("⚠️", "").replace("💨", "").replace("🌊", "").replace("🎒", "").replace("👥", "").replace("📱", "").replace("🚫", "").replace("👫", "").replace("🏠", "").replace("🚗", "")
         
+        # 음성 안내 표시
+        st.info(f"🔊 음성 안내: {clean_text[:100]}...")
+        
+        # JavaScript로 음성 합성
         speech_js = f"""
-        <script>
-        if ('speechSynthesis' in window) {{
-            var utterance = new SpeechSynthesisUtterance(`{clean_text}`);
-            utterance.lang = 'ko-KR';
-            utterance.rate = {speed};
-            speechSynthesis.speak(utterance);
-        }}
-        </script>
+        <div id="speech-container">
+            <script>
+            function speakText() {{
+                if ('speechSynthesis' in window) {{
+                    // 기존 음성 중지
+                    window.speechSynthesis.cancel();
+                    
+                    // 새로운 음성 생성
+                    var utterance = new SpeechSynthesisUtterance(`{clean_text}`);
+                    utterance.lang = 'ko-KR';
+                    utterance.rate = {speed};
+                    utterance.pitch = 1.0;
+                    utterance.volume = 0.8;
+                    
+                    // 음성 시작 이벤트
+                    utterance.onstart = function() {{
+                        console.log('음성 안내 시작');
+                    }};
+                    
+                    // 음성 완료 이벤트
+                    utterance.onend = function() {{
+                        console.log('음성 안내 완료');
+                    }};
+                    
+                    // 음성 오류 이벤트
+                    utterance.onerror = function(event) {{
+                        console.error('음성 안내 오류:', event.error);
+                        alert('음성 안내 기능을 사용할 수 없습니다. 브라우저 설정을 확인해주세요.');
+                    }};
+                    
+                    // 음성 재생
+                    window.speechSynthesis.speak(utterance);
+                }} else {{
+                    alert('이 브라우저는 음성 안내를 지원하지 않습니다.');
+                }}
+            }}
+            
+            // 페이지 로드 후 자동 실행
+            speakText();
+            </script>
+        </div>
         """
-        st.components.v1.html(speech_js, height=0)
+        
+        # JavaScript 실행
+        st.components.v1.html(speech_js, height=50)
+        
+        # 음성 제어 버튼 제공
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⏹️ 음성 중지", key=f"stop_speech_{hash(text)}"):
+                stop_speech_js = """
+                <script>
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                }
+                </script>
+                """
+                st.components.v1.html(stop_speech_js, height=0)
+                st.success("음성이 중지되었습니다.")
+        
+        with col2:
+            if st.button("🔄 다시 듣기", key=f"replay_speech_{hash(text)}"):
+                speak_text(text, speed)
+    else:
+        st.warning("🔊 음성 안내가 비활성화되어 있습니다. 사이드바에서 활성화해주세요.")
 
 # 대피소 데이터
 @st.cache_data
@@ -550,15 +609,34 @@ def main():
             st.session_state.font_size = font_size
             st.rerun()
         
-        # 음성 안내
-        voice_enabled = st.checkbox("🔊 음성 안내 활성화", value=st.session_state.voice_enabled)
+        # 음성 안내 설정
+        st.markdown("### 🔊 음성 안내 설정")
+        voice_enabled = st.checkbox("음성 안내 활성화", value=st.session_state.voice_enabled)
         st.session_state.voice_enabled = voice_enabled
         
-        if voice_enabled and st.button("🔊 음성 테스트"):
-            speak_text("음성 안내 시스템이 정상 작동합니다.")
+        if voice_enabled:
+            st.success("✅ 음성 안내가 활성화되었습니다")
+            
+            # 음성 속도 조절
+            voice_speed = st.slider("음성 속도", 0.5, 2.0, 1.0, 0.1)
+            st.session_state.voice_speed = voice_speed
+            
+            # 음성 테스트
+            if st.button("🔊 음성 테스트"):
+                speak_text("음성 안내 시스템이 정상 작동합니다. 재난 발생 시 이 시스템을 통해 중요한 안내를 받을 수 있습니다.")
+            
+            # 음성 안내 사용법
+            with st.expander("📖 음성 안내 사용법"):
+                st.write("• 각 버튼을 클릭하면 자동으로 음성 안내가 시작됩니다")
+                st.write("• '⏹️ 음성 중지' 버튼으로 언제든 중지할 수 있습니다")
+                st.write("• '🔄 다시 듣기' 버튼으로 반복 재생 가능합니다")
+                st.write("• 크롬, 엣지, 사파리 브라우저에서 최적화되어 있습니다")
+        else:
+            st.info("음성 안내를 사용하려면 위 체크박스를 선택하세요")
         
         # 고대비 모드
-        high_contrast = st.checkbox("🌓 고대비 모드", value=st.session_state.high_contrast)
+        st.markdown("### 🌓 시각 설정")
+        high_contrast = st.checkbox("고대비 모드", value=st.session_state.high_contrast)
         st.session_state.high_contrast = high_contrast
         
         if high_contrast:
@@ -568,8 +646,13 @@ def main():
                 background-color: #000000 !important;
                 color: #FFFFFF !important;
             }
+            .stSelectbox > div > div {
+                background-color: #333333 !important;
+                color: #FFFFFF !important;
+            }
             </style>
             """, unsafe_allow_html=True)
+            st.success("✅ 고대비 모드가 활성화되었습니다")
     
     # 메인 탭들
     tab1, tab2, tab3 = st.tabs(["🏠 대피소 찾기", "🏥 응급의료시설", "📚 재난 행동요령"])
