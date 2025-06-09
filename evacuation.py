@@ -939,7 +939,7 @@ def show_detailed_guide(disaster, guide):
         st.session_state.show_detailed_page = False
         st.session_state.selected_disaster_detail = None
         st.rerun():
-                    st.markdown(f"### {action}")
+                st.markdown(f"### {action}")
                 elif action.startswith("•"):
                     st.write(action)
                 elif action == "":
