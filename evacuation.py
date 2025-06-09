@@ -766,6 +766,102 @@ def show_detailed_guide(disaster, guide):
                     st.write("")
                 else:
                     st.write(action)
+    elif disaster == "해일":
+        # 해일 2단계
+        tab1, tab2 = st.tabs(["📋 해일 사전 대비", "🌊 해일특보 시"])
+        
+        with tab1:
+            st.markdown("## 📺 해일 사전 대비")
+            for action in guide["preparation"]:
+                if action.startswith("📺"):
+                    st.markdown(f"### {action}")
+                elif action.startswith("•"):
+                    st.write(action)
+                elif action == "":
+                    st.write("")
+                else:
+                    st.write(action)
+        
+        with tab2:
+            st.markdown("## 🌊 해일특보 또는 대피명령 시")
+            for action in guide["during"]:
+                if action.startswith("🌊"):
+                    st.markdown(f"### {action}")
+                elif action.startswith("•"):
+                    st.write(action)
+                elif action == "":
+                    st.write("")
+                else:
+                    st.write(action)
+            
+            # 해일 특보 기준 및 Q&A
+            st.markdown("---")
+            st.markdown("## 📖 추가 정보")
+            for action in guide["warning_info"]:
+                if action.startswith(("⚠️", "❓")):
+                    st.markdown(f"### {action}")
+                elif action.startswith(("Q.", "A.")):
+                    st.markdown(f"**{action}**")
+                elif action.startswith("•"):
+                    st.write(action)
+                elif action == "":
+                    st.write("")
+                else:
+                    st.write(action)
+
+    elif disaster == "폭염":
+        # 폭염 3단계
+        tab1, tab2, tab3 = st.tabs(["📋 폭염 사전 대비", "🌡️ 폭염 시 행동요령", "🏥 더위질병 상식"])
+        
+        with tab1:
+            st.markdown("## 📋 폭염 사전 대비")
+            for action in guide["preparation"]:
+                if action.startswith(("🔍", "🏥", "🧰", "⚠️", "👥")):
+                    st.markdown(f"### {action}")
+                elif action.startswith("•"):
+                    st.write(action)
+                elif action == "":
+                    st.write("")
+                else:
+                    st.write(action)
+        
+        with tab2:
+            st.markdown("## 🌡️ 폭염 시 행동요령")
+            for action in guide["during"]:
+                if action.startswith(("🏠", "🏢", "🏫", "🐄", "🏛️")):
+                    st.markdown(f"### {action}")
+                elif action.startswith("•"):
+                    st.write(action)
+                elif action == "":
+                    st.write("")
+                else:
+                    st.write(action)
+            
+            # 핵심 포인트
+            st.markdown("---")
+            for action in guide["key_points"]:
+                if action.startswith("📌"):
+                    st.markdown(f"### {action}")
+                elif action.startswith("•"):
+                    st.write(action)
+                elif action == "":
+                    st.write("")
+                else:
+                    st.write(action)
+        
+        with tab3:
+            st.markdown("## 🏥 더위질병 상식")
+            for action in guide["heat_diseases"]:
+                if action.startswith("🌡️"):
+                    st.markdown(f"### {action}")
+                elif action.startswith(("🚨", "😰", "💪", "😵", "🦵", "🔴")):
+                    st.markdown(f"#### {action}")
+                elif action.startswith(("정의 및 증상:", "응급 대처:")):
+                    st.markdown(f"**{action}**")
+                elif action == "":
+                    st.write("")
+                else:
+                    st.write(action)
     
     else:
         # 기존 2단계 형식 (지진, 화재 등)
