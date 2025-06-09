@@ -54,81 +54,241 @@ def load_css():
     """, unsafe_allow_html=True)
 
 # 음성 안내 기능 (개선된 버전)
-def speak_text(text, speed=1.0):
+# 기존 speak_text 함수를 이 코드로 교체하세요
+
+def speak_text(text, custom_speed=None):
+    """개선된 음성 안내 기능"""
     if st.session_state.get('voice_enabled', False):
-        # 텍스트 정리
-        clean_text = text.replace("**", "").replace("*", "").replace("#", "").replace("•", "").replace("🔍", "").replace("⚠️", "").replace("💨", "").replace("🌊", "").replace("🎒", "").replace("👥", "").replace("📱", "").replace("🚫", "").replace("👫", "").replace("🏠", "").replace("🚗", "")
+        # 음성 속도 설정 (사이드바 설정값 우선 사용)
+        speed = custom_speed if custom_speed else st.session_state.get('voice_speed', 1.0)
+        
+        # 텍스트 정리 (이모지와 마크다운 제거)
+        clean_text = text.replace("**", "").replace("*", "").replace("#", "").replace("•", "")
+        clean_text = clean_text.replace("🔍", "").replace("⚠️", "").replace("💨", "").replace("🌊", "")
+        clean_text = clean_text.replace("🎒", "").replace("👥", "").replace("📱", "").replace("🚫", "")
+        clean_text = clean_text.replace("👫", "").replace("🏠", "").replace("🚗", "").replace("🔊", "")
+        clean_text = clean_text.replace("✅", "").replace("❌", "").replace("📍", "").replace("🏥", "")
+        
+        # 긴 텍스트는 자르기 (300자 제한)
+        if len(clean_text) > 300:
+            clean_text = clean_text[:297] + "..."
         
         # 음성 안내 표시
-        st.info(f"🔊 음성 안내: {clean_text[:100]}...")
+        st.info(f"🔊 음성 안내 (속도: {speed}x): {clean_text[:50]}{'...' if len(clean_text) > 50 else ''}")
         
-        # JavaScript로 음성 합성
+        # 고유한 ID 생성 (충돌 방지)
+        speech_id = f"speech_{abs(hash(text)) % 10000}_{int(time.time() * 1000) % 10000}"
+        
+        # JavaScript로 음성 합성 (개선된 버전)
         speech_js = f"""
-        <div id="speech-container">
+        <div id="{speech_id}">
             <script>
-            function speakText() {{
-                if ('speechSynthesis' in window) {{
-                    // 기존 음성 중지
-                    window.speechSynthesis.cancel();
-                    
-                    // 새로운 음성 생성
-                    var utterance = new SpeechSynthesisUtterance(`{clean_text}`);
-                    utterance.lang = 'ko-KR';
-                    utterance.rate = {speed};
-                    utterance.pitch = 1.0;
-                    utterance.volume = 0.8;
-                    
-                    // 음성 시작 이벤트
-                    utterance.onstart = function() {{
-                        console.log('음성 안내 시작');
-                    }};
-                    
-                    // 음성 완료 이벤트
-                    utterance.onend = function() {{
-                        console.log('음성 안내 완료');
-                    }};
-                    
-                    // 음성 오류 이벤트
-                    utterance.onerror = function(event) {{
-                        console.error('음성 안내 오류:', event.error);
-                        alert('음성 안내 기능을 사용할 수 없습니다. 브라우저 설정을 확인해주세요.');
-                    }};
-                    
-                    // 음성 재생
-                    window.speechSynthesis.speak(utterance);
-                }} else {{
-                    alert('이 브라우저는 음성 안내를 지원하지 않습니다.');
+            (function() {{
+                // 전역 음성 상태 관리
+                if (!window.currentSpeech) {{
+                    window.currentSpeech = null;
+                    window.speechQueue = [];
                 }}
-            }}
-            
-            // 페이지 로드 후 자동 실행
-            speakText();
+                
+                function speakText_{speech_id}() {{
+                    try {{
+                        // 기존 음성 중지
+                        if (window.speechSynthesis) {{
+                            window.speechSynthesis.cancel();
+                        }}
+                        
+                        if ('speechSynthesis' in window) {{
+                            // 새로운 음성 생성
+                            var utterance = new SpeechSynthesisUtterance(`{clean_text}`);
+                            utterance.lang = 'ko-KR';
+                            utterance.rate = {speed};
+                            utterance.pitch = 1.0;
+                            utterance.volume = 0.9;
+                            
+                            // 현재 음성 저장
+                            window.currentSpeech = utterance;
+                            
+                            // 이벤트 핸들러
+                            utterance.onstart = function() {{
+                                console.log('음성 재생 시작: {speech_id}');
+                            }};
+                            
+                            utterance.onend = function() {{
+                                console.log('음성 재생 완료: {speech_id}');
+                                window.currentSpeech = null;
+                            }};
+                            
+                            utterance.onerror = function(event) {{
+                                console.error('음성 오류:', event.error);
+                                window.currentSpeech = null;
+                            }};
+                            
+                            // 음성 재생 (약간의 지연 후)
+                            setTimeout(function() {{
+                                if (window.speechSynthesis) {{
+                                    window.speechSynthesis.speak(utterance);
+                                }}
+                            }}, 100);
+                            
+                        }} else {{
+                            console.error('브라우저가 음성 합성을 지원하지 않습니다.');
+                        }}
+                    }} catch (error) {{
+                        console.error('음성 재생 중 오류:', error);
+                    }}
+                }}
+                
+                // 전역 중지 함수
+                window.stopCurrentSpeech = function() {{
+                    if (window.speechSynthesis) {{
+                        window.speechSynthesis.cancel();
+                        window.currentSpeech = null;
+                        console.log('음성 중지됨');
+                    }}
+                }};
+                
+                // 음성 재생 실행
+                speakText_{speech_id}();
+            }})();
             </script>
         </div>
         """
         
         # JavaScript 실행
-        st.components.v1.html(speech_js, height=50)
+        st.components.v1.html(speech_js, height=0)
         
-        # 음성 제어 버튼 제공
-        col1, col2 = st.columns(2)
+        # 음성 제어 버튼들 (더 안정적으로 구현)
+        col1, col2, col3 = st.columns([1, 1, 1])
+        
         with col1:
-            if st.button("⏹️ 음성 중지", key=f"stop_speech_{hash(text)}"):
-                stop_speech_js = """
+            if st.button("⏹️ 음성 중지", key=f"stop_{speech_id}"):
+                # 즉시 음성 중지
+                stop_js = """
                 <script>
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
+                try {
+                    if (window.speechSynthesis) {
+                        window.speechSynthesis.cancel();
+                    }
+                    if (window.stopCurrentSpeech) {
+                        window.stopCurrentSpeech();
+                    }
+                    console.log('음성 중지 버튼 클릭됨');
+                } catch(e) {
+                    console.error('음성 중지 오류:', e);
                 }
                 </script>
                 """
-                st.components.v1.html(stop_speech_js, height=0)
-                st.success("음성이 중지되었습니다.")
+                st.components.v1.html(stop_js, height=0)
+                st.success("✅ 음성이 중지되었습니다.")
         
         with col2:
-            if st.button("🔄 다시 듣기", key=f"replay_speech_{hash(text)}"):
-                speak_text(text, speed)
+            if st.button("🔄 다시 듣기", key=f"replay_{speech_id}"):
+                # 다시 듣기 (재귀 호출 방지)
+                st.rerun()
+        
+        with col3:
+            # 속도 조절 버튼
+            if st.button("⚡ 빠르게", key=f"fast_{speech_id}"):
+                st.session_state.voice_speed = min(2.0, st.session_state.get('voice_speed', 1.0) + 0.2)
+                speak_text(text, st.session_state.voice_speed)
+                
     else:
         st.warning("🔊 음성 안내가 비활성화되어 있습니다. 사이드바에서 활성화해주세요.")
+
+
+# 사이드바 음성 설정 부분도 개선
+def render_voice_settings():
+    """개선된 음성 설정 사이드바"""
+    st.markdown("### 🔊 음성 안내 설정")
+    
+    # 음성 활성화 토글
+    voice_enabled = st.checkbox("음성 안내 활성화", value=st.session_state.get('voice_enabled', False))
+    st.session_state.voice_enabled = voice_enabled
+    
+    if voice_enabled:
+        st.success("✅ 음성 안내가 활성화되었습니다")
+        
+        # 음성 속도 조절 (더 세밀하게)
+        voice_speed = st.slider("🎚️ 음성 속도", 0.3, 3.0, st.session_state.get('voice_speed', 1.0), 0.1)
+        st.session_state.voice_speed = voice_speed
+        
+        # 실시간 속도 표시
+        if voice_speed <= 0.7:
+            speed_text = "🐌 매우 느림"
+        elif voice_speed <= 1.0:
+            speed_text = "🚶 보통"
+        elif voice_speed <= 1.5:
+            speed_text = "🏃 빠름"
+        else:
+            speed_text = "🚀 매우 빠름"
+            
+        st.caption(f"현재 속도: {speed_text}")
+        
+        # 음성 테스트 (개선된 버전)
+        if st.button("🎤 음성 테스트"):
+            test_text = f"음성 속도 {voice_speed}배로 테스트합니다. 재난 발생 시 이 시스템을 통해 중요한 안내를 받을 수 있습니다."
+            speak_text(test_text)
+        
+        # 전체 음성 중지 버튼
+        if st.button("🔇 모든 음성 중지"):
+            stop_all_js = """
+            <script>
+            try {
+                if (window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                }
+                console.log('모든 음성 중지됨');
+            } catch(e) {
+                console.error('음성 중지 오류:', e);
+            }
+            </script>
+            """
+            st.components.v1.html(stop_all_js, height=0)
+            st.success("🔇 모든 음성이 중지되었습니다.")
+        
+        # 음성 안내 사용법
+        with st.expander("📖 음성 안내 사용법"):
+            st.write("✅ **기본 사용법:**")
+            st.write("• 각 버튼 클릭 시 자동으로 음성 안내 시작")
+            st.write("• '⏹️ 음성 중지' 버튼으로 즉시 중지 가능")
+            st.write("• '🔄 다시 듣기' 버튼으로 반복 재생")
+            st.write("")
+            st.write("⚡ **속도 조절:**")
+            st.write("• 슬라이더로 0.3배~3.0배 속도 조절")
+            st.write("• '⚡ 빠르게' 버튼으로 즉시 속도 증가")
+            st.write("")
+            st.write("🌐 **브라우저 호환성:**")
+            st.write("• 크롬, 엣지, 사파리 최적화")
+            st.write("• 인터넷 연결 불필요 (오프라인 가능)")
+            
+    else:
+        st.info("음성 안내를 사용하려면 위 체크박스를 선택하세요")
+
+
+# 메인 함수에서 사이드바 부분을 이렇게 교체하세요:
+def main():
+    # ... 기존 코드 ...
+    
+    # 사이드바
+    with st.sidebar:
+        st.header("🔧 접근성 설정")
+        
+        # 글씨 크기 조절 (기존 그대로)
+        font_size = st.selectbox(
+            "📝 글씨 크기", 
+            ["소형", "보통", "대형", "특대"], 
+            index=["소형", "보통", "대형", "특대"].index(st.session_state.font_size)
+        )
+        
+        if font_size != st.session_state.font_size:
+            st.session_state.font_size = font_size
+            st.rerun()
+        
+        # 개선된 음성 설정
+        render_voice_settings()
+        
+        # 고대비 모드 (기존 그대로)
+        # ... 나머지 코드
 
 @st.cache_data
 def load_shelter_data():
