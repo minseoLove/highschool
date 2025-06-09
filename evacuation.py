@@ -771,15 +771,21 @@ def show_detailed_guide(disaster, guide):
         # 기존 2단계 형식 (지진, 화재 등)
         col1, col2 = st.columns(2)
         
-        with col1:
+         with col1:
             st.markdown("## ⚡ 즉시 행동")
-            for action in guide["immediate"]:
-                st.write(action)
+            if "immediate" in guide:
+                for action in guide["immediate"]:
+                    st.write(action)
+            else:
+                st.write("즉시 행동 정보가 없습니다.")
         
         with col2:
             st.markdown("## 🏃‍♂️ 대피 행동")
-            for action in guide["evacuation"]:
-                st.write(action)
+            if "evacuation" in guide:
+                for action in guide["evacuation"]:
+                    st.write(action)
+            else:
+                st.write("대피 행동 정보가 없습니다.")
     
     # 메인 페이지로 돌아가기 버튼
     st.markdown("---")
