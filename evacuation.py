@@ -452,38 +452,52 @@ def main():
                 st.markdown("---")
                 detail_key = f"detail_{disaster}"
                 
-                if st.button(f"📖 {disaster} 상세 행동요령 보기", key=detail_key):
-                    st.session_state[detail_key] = True
+                # 세션 상태 초기화
+                if detail_key not in st.session_state:
+                    st.session_state[detail_key] = False
+                
+                # 토글 버튼 방식으로 변경
+                col1, col2 = st.columns([1, 1])
+                with col1:
+                    if st.button(f"📖 {disaster} 상세 내용 보기", key=f"show_{disaster}"):
+                        st.session_state[detail_key] = not st.session_state[detail_key]
+                
+                with col2:
+                    if st.session_state[detail_key]:
+                        if st.button(f"❌ 상세 내용 닫기", key=f"hide_{disaster}"):
+                            st.session_state[detail_key] = False
                 
                 # 상세 내용 표시
-                if st.session_state.get(detail_key, False):
+                if st.session_state[detail_key]:
                     st.markdown("### 📋 상세 행동요령")
                     
                     if disaster == "태풍":
                         # 태풍 상세 정보
-                        st.write("**태풍 예보 시 준비사항**")
-                        for action in guide["preparation"]:
-                            if action.startswith(("🔍", "⚠️", "💨", "🌊", "🎒")):
-                                st.markdown(f"**{action}**")
-                            elif action.startswith("•"):
-                                st.write(action)
-                            elif action == "":
-                                st.write("")
-                            else:
-                                st.write(action)
+                        with st.container():
+                            st.write("**🌀 태풍 예보 시 준비사항**")
+                            for action in guide["preparation"]:
+                                if action.startswith(("🔍", "⚠️", "💨", "🌊", "🎒")):
+                                    st.markdown(f"**{action}**")
+                                elif action.startswith("•"):
+                                    st.write(action)
+                                elif action == "":
+                                    st.write("")
+                                else:
+                                    st.write(action)
                     
                     elif disaster == "호우":
                         # 호우 상세 정보
-                        st.write("**호우 사전준비 사항**")
-                        for action in guide["preparation"]:
-                            if action.startswith(("🗺️", "📱", "🏃", "🎒")):
-                                st.markdown(f"**{action}**")
-                            elif action.startswith("•"):
-                                st.write(action)
-                            elif action == "":
-                                st.write("")
-                            else:
-                                st.write(action)
+                        with st.container():
+                            st.write("**🌧️ 호우 사전준비 사항**")
+                            for action in guide["preparation"]:
+                                if action.startswith(("🗺️", "📱", "🏃", "🎒")):
+                                    st.markdown(f"**{action}**")
+                                elif action.startswith("•"):
+                                    st.write(action)
+                                elif action == "":
+                                    st.write("")
+                                else:
+                                    st.write(action)
                     
                     else:
                         # 기존 2단계 형식 (지진, 화재 등)
@@ -498,11 +512,6 @@ def main():
                             st.write("**🏃‍♂️ 대피 행동**")
                             for action in guide["evacuation"]:
                                 st.write(action)
-                    
-                    # 닫기 버튼
-                    if st.button(f"❌ 상세 내용 닫기", key=f"close_{disaster}"):
-                        st.session_state[detail_key] = False
-                        st.rerun()
                 
                 # 음성 안내 버튼
                 st.markdown("---")
