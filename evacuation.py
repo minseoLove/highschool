@@ -2053,6 +2053,73 @@ def show_detailed_guide(disaster, guide):
         st.session_state.selected_disaster_detail = None
         st.rerun()
 
+# 개인정보 활용동의 함수 (main 함수 위에 추가)
+def show_privacy_consent():
+    """개인정보 활용동의 페이지"""
+    st.markdown('<h1 class="main-header">🚨 재난 대피소 안내 시스템</h1>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: center; font-size: 18px; color: #6B7280;">안전한 대피를 위한 맞춤형 안내 서비스</p>', unsafe_allow_html=True)
+    
+    st.markdown("---")
+    st.markdown("## 📋 개인정보 활용동의")
+    
+    with st.expander("📖 개인정보 처리방침 전문 보기 (필독)", expanded=True):
+        st.markdown("""
+        ### 🔐 **개인정보 처리방침**
+        
+        **📍 수집하는 개인정보 항목**
+        - 현재 위치 정보 (지역 선택)
+        - 연령대 정보  
+        - 장애 유형 (해당 시)
+        - 보호자 연락처 (고령자/장애인용, 선택사항)
+        
+        **🎯 개인정보 수집 및 이용 목적**
+        - 재난 발생 시 최적의 대피소 안내
+        - 사용자 특성에 맞는 맞춤형 안전 정보 제공
+        - 접근성을 고려한 대피 경로 안내
+        
+        **⏰ 개인정보 보유 및 이용기간**
+        - 서비스 이용 기간 동안만 임시 저장
+        - 브라우저 종료 시 모든 정보 자동 삭제
+        - 별도 서버 저장 없음 (로컬 세션만 활용)
+        
+        **🔒 개인정보 보호 조치**
+        - 모든 정보는 브라우저 내에서만 처리
+        - 외부 서버 전송 없음
+        - 제3자 제공 절대 금지
+        """)
+    
+    st.markdown("---")
+    st.markdown("### ✅ **동의 항목**")
+    
+    essential_consent = st.checkbox(
+        "개인정보 수집 및 이용에 동의합니다. (필수)", 
+        key="essential_consent"
+    )
+    
+    optional_consent = st.checkbox(
+        "맞춤형 안전정보 제공을 위한 개인정보 활용에 동의합니다. (선택)", 
+        key="optional_consent"
+    )
+    
+    st.markdown("---")
+    
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        if st.button("❌ 동의하지 않음", type="secondary"):
+            st.warning("⚠️ 필수 개인정보 처리에 동의하지 않으면 서비스를 이용할 수 없습니다.")
+    
+    with col2:
+        if st.button("✅ 동의하고 시작", type="primary", disabled=not essential_consent):
+            if essential_consent:
+                st.session_state.privacy_consent = True
+                st.session_state.essential_consent = essential_consent
+                st.session_state.optional_consent = optional_consent
+                st.session_state.consent_timestamp = datetime.now()
+                
+                st.success("✅ 개인정보 활용동의가 완료되었습니다!")
+                time.sleep(1)
+                st.rerun()
 # 메인 앱
 def main():
     # 세션 상태 초기화
