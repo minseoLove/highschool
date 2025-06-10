@@ -1025,99 +1025,98 @@ def load_shelter_data():
                     "subway": "분당선 서현역 직결"
       
    }, 
-                    "중랑구": {
-            "flood": [
-                {
-                    "name": "건영1차아파트 지하주차장",
-                    "address": "서울특별시 중랑구 봉화산로48길 62 (상봉동)",
-                    "lat": 37.5954,
-                    "lon": 127.0855,
-                    "capacity": 8875,
-                    "distance": 300,
-                    "walk_time": 4,
-                    "type": "지하주차장 1~2층",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "7호선 상봉역 도보 5분"
-                },
-                {
-                    "name": "SM해그린아파트 지하주차장",
-                    "address": "서울특별시 중랑구 공릉로2나길 32-12 (묵동)",
-                    "lat": 37.6126,
-                    "lon": 127.0776,
-                    "capacity": 2701,
-                    "distance": 500,
-                    "walk_time": 7,
-                    "type": "지하주차장 1층",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "7호선 먹골역 도보 8분"
-                },
-                {
-                    "name": "건영빌라트 지하주차장",
-                    "address": "서울특별시 중랑구 동일로91가길 30 (면목동)",
-                    "lat": 37.5847,
-                    "lon": 127.0894,
-                    "capacity": 478,
-                    "distance": 800,
-                    "walk_time": 10,
-                    "type": "지하주차장 1층",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "7호선 면목본동역 도보 12분"
-                }
-            ],
-            "earthquake": [
-                {
-                    "name": "봉화산 근린공원",
-                    "address": "서울특별시 중랑구 상봉동 산1-1",
-                    "lat": 37.5982,
-                    "lon": 127.0901,
-                    "capacity": 5000,
-                    "distance": 600,
-                    "walk_time": 8,
-                    "type": "공원",
-                    "wheelchair": False,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "7호선 상봉역 도보 10분"
-                },
-                {
-                    "name": "용마산 근린공원",
-                    "address": "서울특별시 중랑구 면목동 산1-6",
-                    "lat": 37.5729,
-                    "lon": 127.0854,
-                    "capacity": 3000,
-                    "distance": 900,
-                    "walk_time": 12,
-                    "type": "공원",
-                    "wheelchair": False,
-                    "elevator": False,
-                    "parking": True,
-                    "subway": "7호선 사가정역 도보 15분"
-                }
-            ],
-            "war": [
-            {
-                    "name": "중랑구청 지하공간",
-                    "address": "서울특별시 중랑구 봉우재로 179",
-                    "lat": 37.6063,
-                    "lon": 127.0925,
-                    "capacity": 1000,
-                    "distance": 400,
-                    "walk_time": 5,
-                    "type": "관공서 지하공간",
-                    "wheelchair": True,
-                    "elevator": True,
-                    "parking": True,
-                    "subway": "7호선 상봉역 도보 7분"
-            ]
-        }  # ← 마지막이므로 쉼표 없음
-    }  # ← 딕셔너리 종료
-
+                   "중랑구": {
+    "flood": [
+        {
+            "name": "건영1차아파트 지하주차장",
+            "address": "서울특별시 중랑구 봉화산로48길 62 (상봉동)",
+            "lat": 37.5954,
+            "lon": 127.0855,
+            "capacity": 8875,
+            "distance": 300,
+            "walk_time": 4,
+            "type": "지하주차장 1~2층",
+            "wheelchair": True,
+            "elevator": True,
+            "parking": True,
+            "subway": "7호선 상봉역 도보 5분"
+        },
+        {
+            "name": "SM해그린아파트 지하주차장",
+            "address": "서울특별시 중랑구 공릉로2나길 32-12 (묵동)",
+            "lat": 37.6126,
+            "lon": 127.0776,
+            "capacity": 2701,
+            "distance": 500,
+            "walk_time": 7,
+            "type": "지하주차장 1층",
+            "wheelchair": True,
+            "elevator": True,
+            "parking": True,
+            "subway": "7호선 먹골역 도보 8분"
+        },
+        {
+            "name": "건영빌라트 지하주차장",
+            "address": "서울특별시 중랑구 동일로91가길 30 (면목동)",
+            "lat": 37.5847,
+            "lon": 127.0894,
+            "capacity": 478,
+            "distance": 800,
+            "walk_time": 10,
+            "type": "지하주차장 1층",
+            "wheelchair": True,
+            "elevator": True,
+            "parking": True,
+            "subway": "7호선 면목본동역 도보 12분"
+        }
+    ],
+    "earthquake": [
+        {
+            "name": "봉화산 근린공원",
+            "address": "서울특별시 중랑구 상봉동 산1-1",
+            "lat": 37.5982,
+            "lon": 127.0901,
+            "capacity": 5000,
+            "distance": 600,
+            "walk_time": 8,
+            "type": "공원",
+            "wheelchair": False,
+            "elevator": False,
+            "parking": True,
+            "subway": "7호선 상봉역 도보 10분"
+        },
+        {
+            "name": "용마산 근린공원",
+            "address": "서울특별시 중랑구 면목동 산1-6",
+            "lat": 37.5729,
+            "lon": 127.0854,
+            "capacity": 3000,
+            "distance": 900,
+            "walk_time": 12,
+            "type": "공원",
+            "wheelchair": False,
+            "elevator": False,
+            "parking": True,
+            "subway": "7호선 사가정역 도보 15분"
+        }
+    ],
+    "war": [
+        {
+            "name": "중랑구청 지하공간",
+            "address": "서울특별시 중랑구 봉우재로 179",
+            "lat": 37.6063,
+            "lon": 127.0925,
+            "capacity": 1000,
+            "distance": 400,
+            "walk_time": 5,
+            "type": "관공서 지하공간",
+            "wheelchair": True,
+            "elevator": True,
+            "parking": True,
+            "subway": "7호선 상봉역 도보 7분"
+        }
+    ]
+}
 # 병원 데이터
 @st.cache_data  
 def load_hospital_data():
