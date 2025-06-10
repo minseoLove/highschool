@@ -1101,7 +1101,7 @@ def load_shelter_data():
                 }
             ],
             "war": [
-                {
+            {
                     "name": "중랑구청 지하공간",
                     "address": "서울특별시 중랑구 봉우재로 179",
                     "lat": 37.6063,
