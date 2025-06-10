@@ -1023,6 +1023,10 @@ def load_shelter_data():
                     "elevator": True,
                     "parking": False,
                     "subway": "분당선 서현역 직결"
+      
+  }
+            ]
+        },
                     "중랑구": {
             "flood": [
                 {
