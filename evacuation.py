@@ -332,29 +332,19 @@ def show_privacy_consent():
                 st.rerun()
 # 메인 함수에서 사이드바 부분을 이렇게 교체하세요:
 def main():
-    # ... 기존 코드 ...
+    # 세션 상태 초기화 (이 부분을 맨 처음에 추가)
+    if 'font_size' not in st.session_state:
+        st.session_state.font_size = '보통'
+    if 'voice_enabled' not in st.session_state:
+        st.session_state.voice_enabled = False
+    if 'high_contrast' not in st.session_state:
+        st.session_state.high_contrast = False
     
-    # 사이드바
-    with st.sidebar:
-        st.header("🔧 접근성 설정")
-        
-        # 글씨 크기 조절 (기존 그대로)
-        font_size = st.selectbox(
-            "📝 글씨 크기", 
-            ["소형", "보통", "대형", "특대"], 
-            index=["소형", "보통", "대형", "특대"].index(st.session_state.font_size)
-        )
-        
-        if font_size != st.session_state.font_size:
-            st.session_state.font_size = font_size
-            st.rerun()
-        
-        # 개선된 음성 설정
-        render_voice_settings()
-        
-        # 고대비 모드 (기존 그대로)
-        # ... 나머지 코드
-
+    # 개인정보 동의 확인 (이 부분도 추가)
+    if not st.session_state.get('privacy_consent', False):
+        load_css()
+        show_privacy_consent()
+        return
 @st.cache_data
 def load_shelter_data():
    return {
