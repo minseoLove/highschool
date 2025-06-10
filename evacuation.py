@@ -264,7 +264,7 @@ def render_voice_settings():
     else:
         st.info("음성 안내를 사용하려면 위 체크박스를 선택하세요")
 
-   def show_privacy_consent():
+    def show_privacy_consent():
     """개인정보 활용동의 페이지"""
     st.markdown('<h1 class="main-header">🚨 재난 대피소 안내 시스템</h1>', unsafe_allow_html=True)
     st.markdown('<p style="text-align: center; font-size: 18px; color: #6B7280;">안전한 대피를 위한 맞춤형 안내 서비스</p>', unsafe_allow_html=True)
