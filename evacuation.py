@@ -1116,9 +1116,11 @@ def load_shelter_data():
             "elevator": True,
             "parking": True,
             "subway": "7호선 상봉역 도보 7분"
-        }
+       }
     ]
 }
+        }
+    }
 # 병원 데이터
 @st.cache_data  
 def load_hospital_data():
