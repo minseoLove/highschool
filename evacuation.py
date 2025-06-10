@@ -304,13 +304,14 @@ def show_privacy_consent():
     
     essential_consent = st.checkbox(
         "개인정보 수집 및 이용에 동의합니다. (필수)", 
-        key="essential_consent"
+        key="privacy_essential_consent"
     )
     
     optional_consent = st.checkbox(
         "맞춤형 안전정보 제공을 위한 개인정보 활용에 동의합니다. (선택)", 
-        key="optional_consent"
+        key="privacy_optional_consent"
     )
+    
     
     st.markdown("---")
     
