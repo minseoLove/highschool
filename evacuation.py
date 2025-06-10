@@ -1115,13 +1115,14 @@ def load_shelter_data():
             "wheelchair": True,
             "elevator": True,
             "parking": True,
-            "subway": "7호선 상봉역 도보 7분"
-       }
+            "subway": "7호선 면목본동역 도보 5분",
+            "specialties": ["응급의학과", "내과", "외과", "정형외과"],
+            "region": "중랑구"
+        }
     ]
 }
         }
     }
-# 병원 데이터
 @st.cache_data  
 def load_hospital_data():
     return [
