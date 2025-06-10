@@ -1121,7 +1121,7 @@ def load_shelter_data():
         }
     ]
 }
-        }
+        
     }
 @st.cache_data  
 def load_hospital_data():
