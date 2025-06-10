@@ -1024,9 +1024,7 @@ def load_shelter_data():
                     "parking": False,
                     "subway": "분당선 서현역 직결"
       
-  }
-            ]
-        },
+   }, 
                     "중랑구": {
             "flood": [
                 {
@@ -1116,13 +1114,9 @@ def load_shelter_data():
                     "elevator": True,
                     "parking": True,
                     "subway": "7호선 상봉역 도보 7분"
-                }
-            ]
-        },
-                }
-            ]
-        }
-    }
+             ]
+        }  # ← 마지막이므로 쉼표 없음
+    }  # ← 딕셔너리 종료
 
 # 병원 데이터
 @st.cache_data  
@@ -1332,7 +1326,7 @@ def load_hospital_data():
             "subway": "대구2호선 두류역 도보 10분",
             "specialties": ["응급의학과", "외상센터", "심혈관센터"],
             "region": "대구중구"
-        }
+        },
         # 서울 중랑구
         {
             "name": "중랑구 보건소",
@@ -2312,6 +2306,7 @@ def show_privacy_consent():
                 time.sleep(1)
                 st.rerun()
 # 메인 앱
+# main() 함수 시작 부분에 추가 (세션 상태 초기화 다음)
 def main():
     # 세션 상태 초기화
     if 'font_size' not in st.session_state:
@@ -2320,6 +2315,14 @@ def main():
         st.session_state.voice_enabled = False
     if 'high_contrast' not in st.session_state:
         st.session_state.high_contrast = False
+    
+    # 🆕 개인정보 동의 확인 추가
+    if not st.session_state.get('privacy_consent', False):
+        load_css()
+        show_privacy_consent()
+        return
+    
+    # 기존 코드 계속...
     
     # CSS 로드
     load_css()
